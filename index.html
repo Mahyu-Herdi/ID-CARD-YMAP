@@ -11,49 +11,41 @@
 
     <style>
         :root {
-            /* Warna Tema yang Ramah di Mata (Warm Beige/Bone) */
-            --bg: #EAE6DF; 
+            var(--bg): #EAE6DF; 
             --white: #ffffff;
             --shadow: #c5c1ba;
             --text: #504e4a;
-            
-            /* Warna Khusus Kartu (Lebih kekuningan terang sedikit) */
             --card-bg: #F2EFE8;
             --card-shadow: #cfcbc4;
         }
 
         body {
             font-family: 'Lexend', sans-serif;
-            background-color: var(--bg); color: var(--text);
+            background-color: #EAE6DF; color: var(--text);
             margin: 0; padding: 20px;
             display: flex; flex-direction: column; align-items: center;
         }
 
-        /* PANEL UTAMA */
         .glass-panel {
-            background: var(--bg); border-radius: 35px; padding: 30px;
+            background: #EAE6DF; border-radius: 35px; padding: 30px;
             width: 100%; max-width: 420px;
             box-shadow: 20px 20px 60px var(--shadow), -20px -20px 60px var(--white);
             margin-bottom: 30px;
         }
 
-        /* INPUT */
         input, select {
             width: 100%; padding: 15px; margin: 10px 0;
-            border: none; border-radius: 18px; background: var(--bg);
+            border: none; border-radius: 18px; background: #EAE6DF;
             box-shadow: inset 6px 6px 12px var(--shadow), inset -6px -6px 12px var(--white);
             box-sizing: border-box; font-family: inherit; outline: none;
             color: var(--text);
         }
-        input:focus {
-            box-shadow: inset 8px 8px 16px var(--shadow), inset -8px -8px 16px var(--white);
-        }
+        input:focus { box-shadow: inset 8px 8px 16px var(--shadow), inset -8px -8px 16px var(--white); }
 
-        /* TOMBOL UTAMA */
         button {
             width: 100%; padding: 16px; margin: 15px 0 5px 0;
             border: none; border-radius: 20px; 
-            background: var(--bg); color: var(--text);
+            background: #EAE6DF; color: var(--text);
             font-family: inherit; font-weight: 600; cursor: pointer; 
             transition: all 0.3s ease;
             box-shadow: 8px 8px 16px var(--shadow), -8px -8px 16px var(--white), 
@@ -69,21 +61,17 @@
             box-shadow: inset 6px 6px 12px var(--shadow), inset -6px -6px 12px var(--white);
         }
 
-        /* KARTU ID - Warnanya lebih putih kekuningan */
         #id-card {
             width: 320px; height: 500px;
             background: var(--card-bg); border-radius: 25px;
             box-shadow: 15px 15px 35px var(--shadow), -15px -15px 35px var(--white);
             position: relative; display: none; flex-direction: column; align-items: center; padding: 20px;
-            box-sizing: border-box;
+            box-sizing: border-box; margin: 0 auto;
         }
 
         img[src=""] { display: none; }
 
-        .logo-img { 
-            position: absolute; top: 15px; left: 20px; 
-            width: 90px; object-fit: contain;
-        }
+        .logo-img { position: absolute; top: 15px; left: 20px; width: 90px; object-fit: contain; }
         
         .profile-img-frame {
             width: 130px; height: 160px; margin-top: 80px; border-radius: 20px;
@@ -99,28 +87,26 @@
         }
 
         .info { text-align: center; }
-        .info h3 { margin: 5px 0; font-size: 1.2rem; color: #2d3436; }
+        .info h3 { margin: 5px 0; font-size: 1.2rem; color: #2d3436; text-transform: uppercase;}
         .info p { margin: 2px 0; font-size: 0.85rem; opacity: 0.8; }
 
         .emp-list { width: 100%; max-width: 420px; }
         .emp-card {
-            background: var(--bg); padding: 20px; margin: 20px 0; border-radius: 25px;
+            background: #EAE6DF; padding: 20px; margin: 20px 0; border-radius: 25px;
             box-shadow: 10px 10px 20px var(--shadow), -10px -10px 20px var(--white);
             display: flex; flex-direction: column; gap: 15px;
         }
         .emp-info { border-bottom: 2px solid #d3cec4; padding-bottom: 10px; }
-        
         .action-group { display: flex; gap: 10px; flex-wrap: wrap; justify-content: space-between; }
         .action-group button { margin: 0; padding: 10px; width: 47%; font-size: 12px; border-radius: 15px; }
 
-        /* POPUP NOTIFIKASI CUSTOM (Alert & Confirm) */
         .custom-notif {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(234, 230, 223, 0.8); backdrop-filter: blur(5px);
             z-index: 9999; display: none; justify-content: center; align-items: center;
         }
         .notif-box {
-            background: var(--bg); padding: 30px; border-radius: 30px;
+            background: #EAE6DF; padding: 30px; border-radius: 30px;
             box-shadow: 20px 20px 60px var(--shadow), -20px -20px 60px var(--white);
             text-align: center; width: 80%; max-width: 300px;
         }
@@ -146,7 +132,7 @@
         </div>
     </div>
 
-    <div class="glass-panel">
+    <div class="glass-panel" id="adminPanel">
         <h2 style="text-align: center; margin-bottom: 25px;">YMAP Registration</h2>
         <form id="ymapForm">
             <input type="text" id="nama" placeholder="Nama Lengkap" required>
@@ -162,18 +148,17 @@
     </div>
 
     <div id="id-card">
-        <img src="logo.png" id="cardLogo" class="logo-img" crossorigin="anonymous" onerror="this.style.display='none'"> 
+        <img src="logo.png" id="cardLogo" class="logo-img" onerror="this.style.display='none'"> 
         <div class="profile-img-frame">
-            <img src="" id="cardPhoto" crossorigin="anonymous">
+            <img src="" id="cardPhoto">
         </div>
         <div id="cardQr" class="qr-area"></div>
         <div class="info">
             <p id="cardId" style="font-weight: bold; color: #888; font-size: 10px;"></p>
-            <h3 id="cardNama" style="text-transform: uppercase;"></h3>
+            <h3 id="cardNama"></h3>
             <p id="cardJabatan"></p>
             <p id="cardHp"></p>
-            <p style="margin-top: 15px; color: #27ae60; font-weight: bold; font-size: 10px; letter-spacing: 1px;">PEGAWAI SAH YMAP</p>
-        </div>
+            </div>
     </div>
     
     <button id="btnDownload" style="display:none; width: 100%; max-width: 320px; margin-top: 15px; background: #27ae60; color: white;" onclick="downloadPDF()">Download ID Card (PDF)</button>
@@ -183,37 +168,36 @@
     </div>
 
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbwt_vVjCRGUO2d7PkBfmI16xqiVVzQZJ48XIITtDEXlmuPIoRWn8p7oHM0qoMUaTuTS8A/exec"; // <--- JANGAN LUPA ISI INI LAGI
+        const API_URL = "https://script.google.com/macros/s/AKfycbwt_vVjCRGUO2d7PkBfmI16xqiVVzQZJ48XIITtDEXlmuPIoRWn8p7oHM0qoMUaTuTS8A/exec"; 
         let globalData = [];
         let editModeId = null; 
         let hapusModeId = null;
 
-        // FUNGSI NOTIFIKASI CUSTOM
-        function tampilNotif(pesan) {
-            document.getElementById('notifText').innerText = pesan;
-            document.getElementById('notifOverlay').style.display = 'flex';
-        }
-        function tutupNotif() {
-            document.getElementById('notifOverlay').style.display = 'none';
-        }
-
-        // FUNGSI KONFIRMASI HAPUS CUSTOM
-        function bukaConfirm(id) {
-            hapusModeId = id;
-            document.getElementById('confirmOverlay').style.display = 'flex';
-        }
-        function tutupConfirm() {
-            hapusModeId = null;
-            document.getElementById('confirmOverlay').style.display = 'none';
-        }
+        function tampilNotif(pesan) { document.getElementById('notifText').innerText = pesan; document.getElementById('notifOverlay').style.display = 'flex'; }
+        function tutupNotif() { document.getElementById('notifOverlay').style.display = 'none'; }
+        function bukaConfirm(id) { hapusModeId = id; document.getElementById('confirmOverlay').style.display = 'flex'; }
+        function tutupConfirm() { hapusModeId = null; document.getElementById('confirmOverlay').style.display = 'none'; }
 
         async function fetchPegawai() {
             try {
                 const res = await fetch(API_URL);
                 globalData = await res.json();
+                
+                // CEK JIKA INI MODE SCAN QR (Ada parameter ?view=ID_PEGAWAI di URL)
+                const urlParams = new URLSearchParams(window.location.search);
+                const viewId = urlParams.get('view');
+
+                if(viewId) {
+                    // Sembunyikan panel admin & list, tampilkan kartunya saja
+                    document.getElementById('adminPanel').style.display = 'none';
+                    document.getElementById('empListArea').style.display = 'none';
+                    lihatCard(viewId);
+                    return; // Stop disini, nggak perlu render list
+                }
+
+                // JIKA MODE NORMAL (ADMIN)
                 const container = document.getElementById('empListArea');
                 container.innerHTML = '<h3 style="text-align: center; margin-top: 30px;">Daftar Pegawai</h3>';
-                
                 globalData.forEach(emp => {
                     container.innerHTML += `
                         <div class="emp-card">
@@ -235,25 +219,20 @@
         function siapkanEdit(id) {
             const emp = globalData.find(e => e.fileId === id);
             if(!emp) return;
-
             document.getElementById('nama').value = emp.nama;
             document.getElementById('jabatan').value = emp.jabatan;
             document.getElementById('no_hp').value = emp.no_hp;
             document.getElementById('alamat').value = emp.alamat;
-            
             editModeId = id; 
             document.getElementById('btnSubmit').innerText = "Update Data Pegawai";
             document.getElementById('foto').required = false; 
             document.getElementById('ktp').required = false;
-
             window.scrollTo({ top: 0, behavior: 'smooth' }); 
         }
 
-        // EKSEKUSI HAPUS (Setelah klik YA di Custom Confirm)
         async function eksekusiHapus() {
             tutupConfirm();
             if(!hapusModeId) return;
-            
             tampilNotif("Sedang menghapus data...");
             try {
                 await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: "delete", fileId: hapusModeId }) });
@@ -267,11 +246,7 @@
             const btn = document.getElementById('btnSubmit');
             const fotoFile = document.getElementById('foto').files[0];
             const ktpFile = document.getElementById('ktp').files[0];
-
-            if(!editModeId && (!fotoFile || !ktpFile || !document.getElementById('nama').value)) {
-                return tampilNotif("Lengkapi semua data & foto untuk pegawai baru!");
-            }
-
+            if(!editModeId && (!fotoFile || !ktpFile || !document.getElementById('nama').value)) { return tampilNotif("Lengkapi semua data & foto untuk pegawai baru!"); }
             btn.innerText = "Diproses..."; btn.disabled = true;
 
             const toBase64 = file => new Promise((resolve) => {
@@ -282,14 +257,8 @@
             });
 
             let payload = {
-                action: editModeId ? "edit" : "add",
-                fileId: editModeId, 
-                formData: {
-                    nama: document.getElementById('nama').value,
-                    jabatan: document.getElementById('jabatan').value,
-                    no_hp: document.getElementById('no_hp').value,
-                    alamat: document.getElementById('alamat').value
-                }
+                action: editModeId ? "edit" : "add", fileId: editModeId, 
+                formData: { nama: document.getElementById('nama').value, jabatan: document.getElementById('jabatan').value, no_hp: document.getElementById('no_hp').value, alamat: document.getElementById('alamat').value }
             };
 
             if(!editModeId) {
@@ -303,16 +272,11 @@
             try {
                 await fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) });
                 tampilNotif(editModeId ? "Data berhasil diupdate!" : "Pegawai baru didaftarkan!");
-                
                 document.getElementById('ymapForm').reset();
-                editModeId = null;
-                document.getElementById('btnSubmit').innerText = "Daftarkan Pegawai";
-                document.getElementById('foto').required = true; 
-                document.getElementById('ktp').required = true;
-                
+                editModeId = null; document.getElementById('btnSubmit').innerText = "Daftarkan Pegawai";
+                document.getElementById('foto').required = true; document.getElementById('ktp').required = true;
                 fetchPegawai(); 
             } catch(e) { tampilNotif("Terjadi kesalahan sistem."); btn.disabled = false; }
-            
             btn.disabled = false;
         }
 
@@ -324,47 +288,44 @@
             document.getElementById('cardJabatan').innerText = emp.jabatan;
             document.getElementById('cardHp').innerText = emp.no_hp;
             document.getElementById('cardId').innerText = "ID: " + emp.fileId.substring(0, 8).toUpperCase();
-            
             document.getElementById('cardLogo').style.display = 'block';
 
             const photoEl = document.getElementById('cardPhoto');
             photoEl.style.display = 'block';
             photoEl.src = emp.photoUrl;
 
+            // QR CODE BERISI LINK KE WEB INI
+            const urlUtama = window.location.href.split('?')[0]; // Ambil URL bersih
+            const linkVerifikasi = `${urlUtama}?view=${emp.fileId}`;
+
             document.getElementById('cardQr').innerHTML = "";
             new QRCode(document.getElementById('cardQr'), {
-                text: `YMAP - ${emp.nama} - ${emp.jabatan}`, width: 65, height: 65
+                text: linkVerifikasi, width: 65, height: 65
             });
 
             document.getElementById('id-card').style.display = 'flex';
-            document.getElementById('btnDownload').style.display = 'block';
+            
+            // Tampilkan tombol download HANYA jika bukan mode scan (Admin)
+            if(!window.location.search.includes('view=')) {
+                document.getElementById('btnDownload').style.display = 'block';
+            }
+            
             document.getElementById('id-card').scrollIntoView({ behavior: 'smooth' });
         }
 
         async function downloadPDF() {
             tampilNotif("Menyiapkan PDF...");
             const card = document.getElementById('id-card');
-            
             await new Promise(resolve => setTimeout(resolve, 500));
-
             try {
-                const canvas = await html2canvas(card, { 
-                    scale: 3, 
-                    useCORS: true, 
-                    allowTaint: false,
-                    backgroundColor: "#F2EFE8" 
-                });
+                const canvas = await html2canvas(card, { scale: 3, useCORS: true, allowTaint: true, backgroundColor: "#F2EFE8" });
                 const imgData = canvas.toDataURL('image/png');
                 const { jsPDF } = window.jspdf;
-                
                 const pdf = new jsPDF('p', 'mm', [85.6, 54]); 
                 pdf.addImage(imgData, 'PNG', 0, 0, 54, 85.6);
                 pdf.save(`ID_CARD_${document.getElementById('cardNama').innerText}.pdf`);
-                
                 tutupNotif();
-            } catch (err) {
-                tampilNotif("Gagal membuat PDF. Coba lagi.");
-            }
+            } catch (err) { tampilNotif("Gagal membuat PDF. Coba lagi."); }
         }
 
         window.onload = fetchPegawai;
