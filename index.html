@@ -9,6 +9,12 @@
     <link rel="apple-touch-icon" href="logo.png">
     <meta name="theme-color" content="#EAE6DF">
 
+    <script>
+        if(window.location.search.includes('verify=')) {
+            document.write('<style>.hide-on-verify { display: none !important; pointer-events: none !important; }</style>');
+        }
+    </script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -18,7 +24,7 @@
         :root {
             --bg: #EAE6DF; 
             --white: #ffffff; 
-            --shadow: #c5c1ba; 
+            --shadow: #cfcbc4; /* Shadow dilembutin biar puffy */
             --text: #504e4a;
             --card-bg: #F2EFE8; 
             --card-shadow: #d1cdc6;
@@ -32,152 +38,154 @@
             display: flex; flex-direction: column; align-items: center; 
         }
 
-        /* --- CLAYMORPHISM DITINGKATKAN --- */
+        /* --- CLAYMORPHISM PUFFY (EMPUK & NYAMAN DI MATA) --- */
         .glass-panel { 
             background: var(--bg); border-radius: 35px; padding: 25px; 
             width: 92%; max-width: 400px; box-sizing: border-box;
-            box-shadow: 20px 20px 60px var(--shadow), -20px -20px 60px var(--white), 
-                        inset 4px 4px 10px rgba(255,255,255,0.9); /* Inset dipertebal biar empuk */
-            border: 1px solid rgba(255,255,255,0.5);
+            box-shadow: 12px 12px 24px var(--shadow), -12px -12px 24px var(--white), 
+                        inset 2px 2px 6px rgba(255,255,255,0.6); 
+            border: 1px solid rgba(255,255,255,0.4);
             margin-bottom: 30px; 
         }
 
         input, select { 
             width: 100%; padding: 16px; margin: 10px 0; border: none; border-radius: 18px; 
             background: var(--bg); 
-            box-shadow: inset 8px 8px 16px var(--shadow), inset -8px -8px 16px var(--white); 
+            box-shadow: inset 6px 6px 12px var(--shadow), inset -6px -6px 12px var(--white); 
             box-sizing: border-box; font-family: inherit; outline: none; color: var(--text); 
             transition: all 0.3s;
         }
-        input:focus { box-shadow: inset 10px 10px 20px var(--shadow), inset -10px -10px 20px var(--white); }
+        input:focus { box-shadow: inset 8px 8px 16px var(--shadow), inset -8px -8px 16px var(--white); }
 
+        /* Tombol Default Neumorphism Empuk */
         button { 
-            width: 100%; padding: 18px; margin: 15px 0 5px 0; border: none; border-radius: 22px; 
-            background: var(--bg); color: var(--text); font-family: inherit; font-weight: 600; font-size: 1rem;
+            width: 100%; padding: 16px; margin: 15px 0 5px 0; border: none; border-radius: 22px; 
+            background: var(--bg); color: var(--text); font-family: inherit; font-weight: 600; font-size: 0.95rem;
             cursor: pointer; transition: all 0.2s ease; 
-            box-shadow: 12px 12px 24px var(--shadow), -12px -12px 24px var(--white), 
-                        inset 4px 4px 8px rgba(255,255,255,0.9), inset -4px -4px 8px rgba(0,0,0,0.05); /* Clay lebih terasa */
-            border: 1px solid rgba(255,255,255,0.4);
+            box-shadow: 8px 8px 16px var(--shadow), -8px -8px 16px var(--white), 
+                        inset 2px 2px 4px rgba(255,255,255,0.8); 
+            border: 1px solid rgba(255,255,255,0.2);
         }
-        button:hover { transform: translateY(-3px); box-shadow: 14px 14px 28px var(--shadow), -14px -14px 28px var(--white), inset 4px 4px 8px rgba(255,255,255,0.9); }
-        button:active { transform: translateY(2px); box-shadow: inset 8px 8px 16px var(--shadow), inset -8px -8px 16px var(--white); border: none; }
+        button:hover { transform: translateY(-2px); box-shadow: 10px 10px 20px var(--shadow), -10px -10px 20px var(--white), inset 2px 2px 4px rgba(255,255,255,0.8); }
+        button:active { transform: translateY(2px); box-shadow: inset 6px 6px 12px var(--shadow), inset -6px -6px 12px var(--white); border: none; }
         button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: inset 6px 6px 12px var(--shadow), inset -6px -6px 12px var(--white); }
 
-        /* --- ID CARD LAYOUT CENTER PRESISI --- */
+        /* Tombol Spesial Download & Tutup (Lebih soft shadows-nya) */
+        .btn-green { background: #2ecc71; color: white; box-shadow: 6px 6px 12px var(--shadow), -6px -6px 12px var(--white); border: none; }
+        .btn-red { background: #e74c3c; color: white; box-shadow: 6px 6px 12px var(--shadow), -6px -6px 12px var(--white); border: none; }
+        .btn-tambah { width: auto; min-width: 200px; padding: 14px 28px; background: #2980b9; color: white; margin-bottom: 25px; border-radius: 20px; box-shadow: 6px 6px 12px var(--shadow), -6px -6px 12px var(--white); border: none;}
+
+        /* --- ID CARD LAYOUT (FIX LOGO KETIMPA) --- */
         #id-card { 
             width: 320px; height: 500px; background: var(--card-bg); border-radius: 25px; 
-            box-shadow: 20px 20px 50px var(--shadow), -20px -20px 50px var(--white),
-                        inset 4px 4px 15px rgba(255,255,255,1); /* Makin empuk */
-            border: 2px solid rgba(255,255,255,0.7);
+            box-shadow: 15px 15px 30px var(--shadow), -15px -15px 30px var(--white),
+                        inset 3px 3px 8px rgba(255,255,255,0.9); 
+            border: 2px solid rgba(255,255,255,0.5);
             position: relative; display: none; 
-            flex-direction: column; align-items: center; justify-content: center; /* Bikin konten presisi di tengah */
-            padding: 20px; padding-top: 40px; box-sizing: border-box; margin: 0 auto; 
+            flex-direction: column; align-items: center; justify-content: flex-start; /* Dirubah biar foto gak naik */
+            padding: 20px; padding-top: 85px; /* Jarak atas DIBESARIN khusus buat tempat logo */
+            box-sizing: border-box; margin: 0 auto; 
             overflow: hidden; 
             z-index: 1;
         }
 
-        /* Seni Gelombang Dipertebal Warnanya */
+        /* Seni Gelombang (Warna pas, gak terlalu tebal, gak terlalu tipis) */
         .shape-red {
             position: absolute; top: -60px; right: -60px; width: 260px; height: 260px;
             background: var(--ymap-red); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
-            opacity: 0.35; /* Ditebalin dari 0.12 */
-            z-index: -1; filter: blur(25px); /* Biar tetep nyatu sama BG */
+            opacity: 0.25; z-index: -1; filter: blur(25px); 
         }
         .shape-blue {
             position: absolute; bottom: -70px; left: -70px; width: 260px; height: 260px;
             background: var(--ymap-blue); border-radius: 60% 40% 30% 70% / 50% 40% 50% 60%;
-            opacity: 0.35; /* Ditebalin dari 0.12 */
-            z-index: -1; filter: blur(25px);
+            opacity: 0.25; z-index: -1; filter: blur(25px);
         }
 
         img[src=""] { display: none; }
         
-        /* Posisi Logo di Card */
-        .logo-img { position: absolute; top: 20px; left: 20px; width: 85px; object-fit: contain; z-index: 2; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.15)); }
+        /* Logo aman di pojok atas, gak nyenggol foto */
+        .logo-img { position: absolute; top: 20px; left: 20px; width: 80px; object-fit: contain; z-index: 2; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1)); }
         
         /* Frame Foto */
         .profile-img-frame { 
-            width: 140px; height: 170px; margin-bottom: 15px; border-radius: 22px; 
+            width: 135px; height: 165px; margin: 0 0 15px 0; border-radius: 22px; 
             background: var(--card-bg); z-index: 2;
-            box-shadow: 12px 12px 24px var(--card-shadow), -12px -12px 24px var(--white), inset 3px 3px 8px rgba(255,255,255,0.8); 
+            box-shadow: 8px 8px 16px var(--card-shadow), -8px -8px 16px var(--white), inset 2px 2px 5px rgba(255,255,255,0.5); 
             overflow: hidden; display: flex; justify-content: center; align-items: center; 
-            border: 4px solid rgba(255,255,255,0.9); /* Bingkai foto lebih tebal */
+            border: 3px solid rgba(255,255,255,0.7); 
         }
         .profile-img-frame img { width: 100%; height: 100%; object-fit: cover; }
         
-        /* Area QR */
         .qr-area { 
-            width: 70px; height: 70px; margin: 0 0 15px 0; padding: 5px; 
+            width: 65px; height: 65px; margin: 0 0 12px 0; padding: 5px; 
             background: white; border-radius: 12px; z-index: 2;
-            box-shadow: 6px 6px 12px var(--card-shadow), -6px -6px 12px var(--white); 
+            box-shadow: 4px 4px 10px var(--card-shadow), -4px -4px 10px var(--white); 
         }
         
-        /* Info Teks */
-        .info { text-align: center; z-index: 2; display: flex; flex-direction: column; gap: 4px;}
-        .info h3 { margin: 0; font-size: 1.25rem; color: #2d3436; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;}
-        .info p { margin: 0; font-size: 0.9rem; color: #555; font-weight: 600; }
-        .info .id-text { font-weight: bold; color: #888; font-size: 10px; margin-bottom: 2px;}
-        .info .alamat-text { font-size: 0.8rem; font-weight: 500; color: #666; max-width: 260px; line-height: 1.2; margin-top: 5px;}
+        .info { text-align: center; z-index: 2; display: flex; flex-direction: column; }
+        .info h3 { margin: 0; font-size: 1.2rem; color: #2d3436; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;}
+        .info p { margin: 0; font-size: 0.85rem; color: #555; font-weight: 600; line-height: 1.4;}
+        .info .id-text { font-weight: bold; color: #888; font-size: 10px; margin-bottom: 4px; letter-spacing: 1px;}
+        .info .alamat-text { font-size: 0.75rem; font-weight: 500; color: #666; max-width: 260px; line-height: 1.2; margin-top: 6px;}
 
-        /* --- SISA STYLE SAMA --- */
+        /* --- SISA STYLE --- */
         .emp-list { width: 92%; max-width: 400px; box-sizing: border-box;}
         .emp-card { 
             background: var(--bg); padding: 22px; margin: 20px 0; border-radius: 25px; 
-            box-shadow: 12px 12px 24px var(--shadow), -12px -12px 24px var(--white); 
+            box-shadow: 10px 10px 20px var(--shadow), -10px -10px 20px var(--white); 
             display: flex; flex-direction: column; gap: 15px; border: 1px solid rgba(255,255,255,0.3);
         }
         .emp-info { border-bottom: 2px dashed #d3cec4; padding-bottom: 12px; }
         .action-group { display: flex; gap: 10px; flex-wrap: wrap; justify-content: space-between; }
         .action-group button { margin: 0; padding: 12px; width: 47%; font-size: 12px; border-radius: 15px; }
 
-        .custom-notif { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(234, 230, 223, 0.85); backdrop-filter: blur(8px); z-index: 9999; display: none; justify-content: center; align-items: center; }
-        .notif-box { background: var(--bg); padding: 35px 25px; border-radius: 35px; box-shadow: 20px 20px 60px var(--shadow), -20px -20px 60px var(--white), inset 2px 2px 5px rgba(255,255,255,0.6); text-align: center; width: 85%; max-width: 320px; border: 1px solid rgba(255,255,255,0.5); }
+        .custom-notif { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(234, 230, 223, 0.85); backdrop-filter: blur(5px); z-index: 9999; display: none; justify-content: center; align-items: center; }
+        .notif-box { background: var(--bg); padding: 35px 25px; border-radius: 30px; box-shadow: 15px 15px 30px var(--shadow), -15px -15px 30px var(--white), inset 2px 2px 5px rgba(255,255,255,0.6); text-align: center; width: 85%; max-width: 300px; border: 1px solid rgba(255,255,255,0.5); }
         .btn-group-notif { display: flex; gap: 10px; margin-top: 20px; }
 
-        .verify-icon { width: 80px; height: 80px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 40px; margin: 0 auto 20px auto; color: white; box-shadow: 10px 10px 20px var(--shadow), -10px -10px 20px var(--white), inset 3px 3px 6px rgba(255,255,255,0.5); }
+        .verify-icon { width: 80px; height: 80px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 40px; margin: 0 auto 20px auto; color: white; box-shadow: 8px 8px 16px var(--shadow), -8px -8px 16px var(--white), inset 2px 2px 6px rgba(255,255,255,0.3); }
         .icon-success { background: #27ae60; }
         .icon-fail { background: #e74c3c; }
 
         #card-action-btns { display: none; width: 92%; max-width: 320px; margin-top: 15px; flex-direction: column; gap: 10px; }
 
         .app-header { display: flex; flex-direction: column; align-items: center; margin-bottom: 30px; width: 100%; text-align: center; }
-        .app-header img { width: 140px; object-fit: contain; margin-bottom: 12px; filter: drop-shadow(3px 3px 6px rgba(0,0,0,0.1)); }
-        .app-header h2 { margin: 0; color: #2d3436; font-size: 1.25rem; letter-spacing: 0.5px; font-weight: 700; line-height: 1.4; }
-
-        .btn-tambah { width: auto; min-width: 200px; padding: 14px 28px; background: #2980b9; color: white; margin-bottom: 25px; font-size: 0.95rem; border-radius: 20px; }
+        .app-header img { width: 120px; object-fit: contain; margin-bottom: 12px; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1)); }
+        .app-header h2 { margin: 0; color: #2d3436; font-size: 1.2rem; letter-spacing: 0.5px; font-weight: 700; line-height: 1.4; }
     </style>
 </head>
 <body>
 
-    <div id="notifOverlay" class="custom-notif">
+    <div id="notifOverlay" class="custom-notif hide-on-verify">
         <div class="notif-box">
             <p id="notifText" style="font-weight: 600; font-size: 1.1rem;"></p>
             <button onclick="tutupNotif()">Tutup</button>
         </div>
     </div>
 
-    <div id="confirmOverlay" class="custom-notif">
+    <div id="confirmOverlay" class="custom-notif hide-on-verify">
         <div class="notif-box">
             <p style="font-weight: 600; color: #c0392b; font-size: 1.1rem;">Yakin mau hapus data pegawai ini secara permanen?</p>
             <div class="btn-group-notif">
                 <button onclick="tutupConfirm()" style="color: #504e4a;">Batal</button>
-                <button onclick="eksekusiHapus()" style="color: #c0392b;">Ya, Hapus!</button>
+                <button onclick="eksekusiHapus()" class="btn-red">Ya, Hapus!</button>
             </div>
         </div>
     </div>
 
     <div id="verifyOverlay" class="custom-notif">
-        <div class="notif-box" id="verifyContent"></div>
+        <div class="notif-box" id="verifyContent">
+            </div>
     </div>
 
-    <div class="app-header" id="appHeader">
+    <div class="app-header hide-on-verify" id="appHeader">
         <img src="logo.png" alt="Logo YMAP" onerror="this.style.display='none'">
         <h2>YAYASAN MUSLIM<br>ACEH PEDULI</h2>
     </div>
 
-    <button id="btnBukaForm" class="btn-tambah" onclick="bukaForm()">+ Tambah Pegawai</button>
+    <button id="btnBukaForm" class="btn-tambah hide-on-verify" onclick="bukaForm()">+ Tambah Pegawai</button>
 
-    <div class="glass-panel" id="adminPanel" style="display: none;">
+    <div class="glass-panel hide-on-verify" id="adminPanel" style="display: none;">
         <h2 id="formTitle" style="text-align: center; margin-bottom: 25px; color: #2d3436;">Registrasi Pegawai</h2>
         <form id="ymapForm">
             <input type="text" id="nama" placeholder="Nama Lengkap" required>
@@ -189,8 +197,8 @@
             <p style="font-size: 12px; margin: 15px 0 5px 10px; opacity: 0.7; font-weight: 600;">Upload Foto KTP:</p>
             <input type="file" id="ktp" accept="image/*" required>
             
-            <button type="button" onclick="simpanData()" id="btnSubmit" style="background: #27ae60; color: white;">Simpan Data</button>
-            <button type="button" onclick="tutupForm()" style="background: #e74c3c; color: white; margin-top: 5px;">Batal</button>
+            <button type="button" onclick="simpanData()" id="btnSubmit" class="btn-green" style="margin-top: 15px;">Simpan Data</button>
+            <button type="button" onclick="tutupForm()" class="btn-red" style="margin-top: 5px;">Batal</button>
         </form>
     </div>
 
@@ -212,12 +220,12 @@
         </div>
     </div>
     
-    <div id="card-action-btns">
-        <button id="btnDownload" style="background: #27ae60; color: white; margin: 0;" onclick="downloadPDF()">Download ID Card (PDF)</button>
-        <button onclick="tutupCard()" style="background: #e74c3c; color: white; margin: 0;">Tutup Preview Card</button>
+    <div id="card-action-btns" class="hide-on-verify">
+        <button id="btnDownload" class="btn-green" style="margin: 0;" onclick="downloadPDF()">Download ID Card (PDF)</button>
+        <button onclick="tutupCard()" class="btn-red" style="margin: 0;">Tutup Preview Card</button>
     </div>
 
-    <div class="emp-list" id="areaDaftarPegawai">
+    <div class="emp-list hide-on-verify" id="areaDaftarPegawai">
         <input type="text" id="inputCari" placeholder="🔍 Cari nama atau jabatan..." onkeyup="cariPegawai()" style="margin-bottom: 20px;">
         <div id="empListArea"></div>
     </div>
@@ -267,11 +275,6 @@
                 const verifyId = urlParams.get('verify'); 
 
                 if(verifyId) {
-                    document.getElementById('appHeader').style.display = 'none';
-                    document.getElementById('adminPanel').style.display = 'none';
-                    document.getElementById('btnBukaForm').style.display = 'none';
-                    document.getElementById('areaDaftarPegawai').style.display = 'none';
-                    
                     const emp = globalData.find(e => e.fileId === verifyId);
                     document.getElementById('verifyOverlay').style.display = 'flex';
                     
@@ -423,7 +426,7 @@
             document.getElementById('cardNama').innerText = emp.nama;
             document.getElementById('cardJabatan').innerText = emp.jabatan;
             document.getElementById('cardHp').innerText = emp.no_hp;
-            document.getElementById('cardAlamat').innerText = emp.alamat; // Alamat masuk sini
+            document.getElementById('cardAlamat').innerText = emp.alamat; 
             document.getElementById('cardId').innerText = "ID: " + emp.fileId.substring(0, 8).toUpperCase();
             document.getElementById('cardLogo').style.display = 'block';
 
@@ -461,7 +464,7 @@
             if(!window.location.search.includes('verify=')) {
                 btnDl.innerText = "Download ID Card (PDF)";
                 btnDl.disabled = false;
-                btnDl.style.background = "#27ae60";
+                btnDl.style.background = "#2ecc71";
             }
         }
 
