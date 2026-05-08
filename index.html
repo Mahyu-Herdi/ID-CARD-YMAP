@@ -20,19 +20,43 @@
             --card-bg: #F2EFE8; --card-shadow: #cfcbc4;
         }
 
-        body { font-family: 'Lexend', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        body { 
+            font-family: 'Lexend', sans-serif; background-color: var(--bg); color: var(--text); 
+            margin: 0; padding: 30px 15px; /* Tambah padding atas-bawah dan jarak aman */
+            display: flex; flex-direction: column; align-items: center; 
+        }
 
-        .glass-panel { background: var(--bg); border-radius: 35px; padding: 30px; width: 100%; max-width: 420px; box-shadow: 20px 20px 60px var(--shadow), -20px -20px 60px var(--white); margin-bottom: 30px; }
+        /* Lebar diturunin jadi 92% biar ada jarak margin di layar HP */
+        .glass-panel { 
+            background: var(--bg); border-radius: 35px; padding: 25px; 
+            width: 92%; max-width: 400px; box-sizing: border-box;
+            box-shadow: 20px 20px 60px var(--shadow), -20px -20px 60px var(--white); 
+            margin-bottom: 30px; 
+        }
 
-        input, select { width: 100%; padding: 15px; margin: 10px 0; border: none; border-radius: 18px; background: var(--bg); box-shadow: inset 6px 6px 12px var(--shadow), inset -6px -6px 12px var(--white); box-sizing: border-box; font-family: inherit; outline: none; color: var(--text); }
+        input, select { 
+            width: 100%; padding: 15px; margin: 10px 0; border: none; border-radius: 18px; 
+            background: var(--bg); box-shadow: inset 6px 6px 12px var(--shadow), inset -6px -6px 12px var(--white); 
+            box-sizing: border-box; font-family: inherit; outline: none; color: var(--text); 
+        }
         input:focus { box-shadow: inset 8px 8px 16px var(--shadow), inset -8px -8px 16px var(--white); }
 
-        button { width: 100%; padding: 16px; margin: 15px 0 5px 0; border: none; border-radius: 20px; background: var(--bg); color: var(--text); font-family: inherit; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: 8px 8px 16px var(--shadow), -8px -8px 16px var(--white), inset 2px 2px 4px rgba(255,255,255,0.6), inset -2px -2px 4px rgba(0,0,0,0.03); }
+        button { 
+            width: 100%; padding: 16px; margin: 15px 0 5px 0; border: none; border-radius: 20px; 
+            background: var(--bg); color: var(--text); font-family: inherit; font-weight: 600; 
+            cursor: pointer; transition: all 0.3s ease; 
+            box-shadow: 8px 8px 16px var(--shadow), -8px -8px 16px var(--white), inset 2px 2px 4px rgba(255,255,255,0.6), inset -2px -2px 4px rgba(0,0,0,0.03); 
+        }
         button:hover { transform: translateY(-2px); box-shadow: 10px 10px 20px var(--shadow), -10px -10px 20px var(--white), inset 2px 2px 4px rgba(255,255,255,0.6); }
         button:active { transform: translateY(2px); box-shadow: inset 6px 6px 12px var(--shadow), inset -6px -6px 12px var(--white); }
         button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: inset 6px 6px 12px var(--shadow), inset -6px -6px 12px var(--white); }
 
-        #id-card { width: 320px; height: 500px; background: var(--card-bg); border-radius: 25px; box-shadow: 15px 15px 35px var(--shadow), -15px -15px 35px var(--white); position: relative; display: none; flex-direction: column; align-items: center; padding: 20px; box-sizing: border-box; margin: 0 auto; }
+        #id-card { 
+            width: 320px; height: 500px; background: var(--card-bg); border-radius: 25px; 
+            box-shadow: 15px 15px 35px var(--shadow), -15px -15px 35px var(--white); 
+            position: relative; display: none; flex-direction: column; align-items: center; 
+            padding: 20px; box-sizing: border-box; margin: 0 auto; 
+        }
         
         img[src=""] { display: none; }
         .logo-img { position: absolute; top: 15px; left: 20px; width: 90px; object-fit: contain; }
@@ -43,7 +67,7 @@
         .info h3 { margin: 5px 0; font-size: 1.2rem; color: #2d3436; text-transform: uppercase;}
         .info p { margin: 2px 0; font-size: 0.85rem; opacity: 0.8; }
 
-        .emp-list { width: 100%; max-width: 420px; }
+        .emp-list { width: 92%; max-width: 400px; box-sizing: border-box;}
         .emp-card { background: var(--bg); padding: 20px; margin: 20px 0; border-radius: 25px; box-shadow: 10px 10px 20px var(--shadow), -10px -10px 20px var(--white); display: flex; flex-direction: column; gap: 15px; }
         .emp-info { border-bottom: 2px solid #d3cec4; padding-bottom: 10px; }
         .action-group { display: flex; gap: 10px; flex-wrap: wrap; justify-content: space-between; }
@@ -53,11 +77,16 @@
         .notif-box { background: var(--bg); padding: 30px; border-radius: 30px; box-shadow: 20px 20px 60px var(--shadow), -20px -20px 60px var(--white); text-align: center; width: 80%; max-width: 300px; }
         .btn-group-notif { display: flex; gap: 10px; margin-top: 20px; }
 
-        #card-action-btns { display: none; width: 100%; max-width: 320px; margin-top: 15px; flex-direction: column; gap: 10px; }
+        #card-action-btns { display: none; width: 92%; max-width: 320px; margin-top: 15px; flex-direction: column; gap: 10px; }
 
-        /* Style untuk Header Logo Aplikasi di atas */
-        .app-header { display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; }
-        .app-header img { width: 80px; filter: drop-shadow(5px 5px 10px var(--shadow)); margin-bottom: 10px;}
+        /* Header Logo Lebih Besar & Bersih */
+        .app-header { display: flex; flex-direction: column; align-items: center; margin-bottom: 25px; width: 100%; }
+        .app-header img { 
+            width: 130px; /* Diperbesar dari 80px */
+            object-fit: contain; 
+            margin-bottom: 10px;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1)); /* Bayangan dilembutin biar gak burik */
+        }
     </style>
 </head>
 <body>
@@ -81,10 +110,10 @@
 
     <div class="app-header" id="appHeader">
         <img src="logo.png" alt="Logo YMAP" onerror="this.style.display='none'">
-        <h2 style="margin: 0; color: #2d3436;">Sistem ID YMAP</h2>
+        <h2 style="margin: 0; color: #2d3436; font-size: 1.3rem;">Sistem ID YMAP</h2>
     </div>
 
-    <button id="btnBukaForm" onclick="bukaForm()" style="max-width: 420px; background: #2980b9; color: white; margin-bottom: 20px;">+ Tambah Pegawai Baru</button>
+    <button id="btnBukaForm" onclick="bukaForm()" style="width: 92%; max-width: 400px; background: #2980b9; color: white; margin-bottom: 20px;">+ Tambah Pegawai Baru</button>
 
     <div class="glass-panel" id="adminPanel" style="display: none;">
         <h2 id="formTitle" style="text-align: center; margin-bottom: 25px;">Registrasi Pegawai</h2>
@@ -144,7 +173,6 @@
         function bukaConfirm(id) { hapusModeId = id; document.getElementById('confirmOverlay').style.display = 'flex'; }
         function tutupConfirm() { hapusModeId = null; document.getElementById('confirmOverlay').style.display = 'none'; }
 
-        // --- FUNGSI BUKA & TUTUP FORM ---
         function bukaForm() {
             document.getElementById('adminPanel').style.display = 'block';
             document.getElementById('btnBukaForm').style.display = 'none';
@@ -171,7 +199,6 @@
                 const viewId = urlParams.get('view');
 
                 if(viewId) {
-                    // Sembunyikan elemen admin kalau di mode verifikasi QR
                     document.getElementById('appHeader').style.display = 'none';
                     document.getElementById('adminPanel').style.display = 'none';
                     document.getElementById('btnBukaForm').style.display = 'none';
@@ -222,12 +249,10 @@
             const emp = globalData.find(e => e.fileId === id);
             if(!emp) return;
             
-            // Buka formnya
             document.getElementById('adminPanel').style.display = 'block';
             document.getElementById('btnBukaForm').style.display = 'none';
             document.getElementById('formTitle').innerText = "Update Data Pegawai";
 
-            // Isi formnya
             document.getElementById('nama').value = emp.nama;
             document.getElementById('jabatan').value = emp.jabatan;
             document.getElementById('no_hp').value = emp.no_hp;
@@ -240,25 +265,32 @@
             window.scrollTo({ top: 0, behavior: 'smooth' }); 
         }
 
+        // --- FUNGSI HAPUS: INSTAN HILANG DARI LAYAR ---
         async function eksekusiHapus() {
             if(!hapusModeId) return;
+            
+            const idYangDihapus = hapusModeId; // Simpan ID sebelum dihapus
             tutupConfirm(); 
             tampilNotif("Sedang menghapus data...");
             
             try {
-                await fetch(API_URL, { 
+                // Tembak API Google Apps Script buat hapus di belakang layar
+                fetch(API_URL, { 
                     method: 'POST', 
-                    body: JSON.stringify({ action: "delete", fileId: hapusModeId }) 
+                    body: JSON.stringify({ action: "delete", fileId: idYangDihapus }) 
                 });
+                
+                // Langsung usir dari layar web detik ini juga (Gak perlu nunggu Drive API)
+                globalData = globalData.filter(emp => emp.fileId !== idYangDihapus);
+                renderList(globalData);
                 
                 tutupNotif(); 
                 tampilNotif("Data berhasil dihapus!");
                 document.getElementById('inputCari').value = ""; 
-                fetchPegawai(); 
+                hapusModeId = null;
             } catch(e) { 
-                tampilNotif("Terjadi gangguan, tapi data mungkin sudah terhapus. Coba refresh."); 
+                tampilNotif("Gagal menghapus data. Periksa koneksi."); 
             }
-            hapusModeId = null;
         }
 
         async function simpanData() {
@@ -291,7 +323,7 @@
                 await fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) });
                 tampilNotif(editModeId ? "Data berhasil diupdate!" : "Pegawai baru didaftarkan!");
                 
-                tutupForm(); // Tutup form kalau sukses
+                tutupForm(); 
                 document.getElementById('inputCari').value = ""; 
                 fetchPegawai(); 
             } catch(e) { tampilNotif("Terjadi kesalahan sistem."); }
@@ -351,7 +383,10 @@
         function tutupCard() {
             document.getElementById('id-card').style.display = 'none';
             document.getElementById('card-action-btns').style.display = 'none';
-            document.querySelector('.emp-list').scrollIntoView({ behavior: 'smooth' });
+            
+            // Scrollnya dibenerin dikit biar pas nutup kelihatan input cari
+            const areaDaftar = document.getElementById('areaDaftarPegawai');
+            areaDaftar.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         async function downloadPDF() {
