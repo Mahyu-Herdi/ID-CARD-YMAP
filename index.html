@@ -81,6 +81,39 @@
         .btn-red:hover { transform: translateY(-2px); filter: brightness(0.9); box-shadow: 10px 10px 20px var(--shadow), -10px -10px 20px var(--white), inset 3px 3px 8px rgba(255,255,255,0.4); }
         .btn-red:active { transform: translateY(2px); box-shadow: inset 6px 6px 12px rgba(0,0,0,0.2); }
 
+        /* HEADER & LACI ANIMASI BARU */
+        .header-container { 
+            width: 100%; max-width: 400px; 
+            display: flex; flex-direction: column; align-items: flex-start; /* Rata kiri */
+            margin-bottom: 25px; position: relative; 
+        }
+        .app-header { 
+            display: flex; flex-direction: row; align-items: center; justify-content: flex-start; 
+            width: 100%; text-align: left; cursor: pointer; z-index: 5; background: var(--bg); 
+            user-select: none; -webkit-tap-highlight-color: transparent; transition: opacity 0.2s;
+        }
+        .app-header:active { opacity: 0.7; }
+        .app-header img { 
+            width: 65px; object-fit: contain; margin-bottom: 0; margin-right: 15px; 
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1)); 
+        }
+        .app-header h2 { 
+            margin: 0; color: var(--ymap-blue-dark); font-size: 1.15rem; 
+            letter-spacing: 0.5px; font-weight: 700; line-height: 1.3; 
+        }
+        .drawer-wrapper { 
+            width: 100%; display: flex; justify-content: flex-start; 
+            overflow: hidden; max-height: 0; opacity: 0; transform: translateY(-20px); 
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); 
+            z-index: 1; padding-left: 5px; 
+        }
+        .drawer-wrapper.open { 
+            max-height: 80px; opacity: 1; transform: translateY(0); margin-top: 15px; 
+        }
+        .btn-tambah { 
+            width: auto; padding: 12px 24px; font-size: 0.9rem; margin: 0; 
+        }
+
         /* ID CARD - Presisi & Anti Pecah */
         #id-card { 
             width: 320px; height: 507px; 
@@ -96,17 +129,14 @@
             z-index: 1;
         }
 
-        /* Perbaikan Seni Gelombang agar Support PDF HD */
         .shape-red {
             position: absolute; top: -30px; right: -30px; width: 100px; height: 100px;
-            background: transparent; border-radius: 50%;
-            z-index: -1; 
-            box-shadow: 0 0 90px 70px rgba(234, 67, 73, 0.4); /* Pakai shadow murni, dilarang pakai filter blur */
+            background: transparent; border-radius: 50%; z-index: -1; 
+            box-shadow: 0 0 90px 70px rgba(234, 67, 73, 0.4); 
         }
         .shape-blue {
             position: absolute; bottom: -30px; left: -30px; width: 100px; height: 100px;
-            background: transparent; border-radius: 50%;
-            z-index: -1; 
+            background: transparent; border-radius: 50%; z-index: -1; 
             box-shadow: 0 0 90px 70px rgba(38, 124, 165, 0.4); 
         }
 
@@ -157,10 +187,6 @@
 
         #card-action-btns { display: none; width: 92%; max-width: 320px; margin-top: 15px; flex-direction: column; gap: 10px; }
 
-        .app-header { display: flex; flex-direction: column; align-items: center; margin-bottom: 25px; width: 100%; text-align: center; }
-        .app-header img { width: 120px; object-fit: contain; margin-bottom: 12px; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1)); }
-        .app-header h2 { margin: 0; color: var(--ymap-blue-dark); font-size: 1.2rem; letter-spacing: 0.5px; font-weight: 700; line-height: 1.4; }
-
         #dashboardScreen { display: none; flex-direction: column; align-items: center; width: 100%; }
         
         .btn-logout { background: transparent; border: none; color: var(--ymap-red); font-size: 12px; box-shadow: none; padding: 5px; width: auto; margin-top: 20px; text-decoration: underline; font-weight: 600; }
@@ -190,9 +216,14 @@
         <div class="notif-box" id="verifyContent"></div>
     </div>
 
-    <div class="app-header hide-on-verify" id="appHeader">
-        <img src="logo.png" alt="Logo YMAP" onerror="this.style.display='none'">
-        <h2>YAYASAN MUSLIM<br>ACEH PEDULI</h2>
+    <div class="header-container hide-on-verify">
+        <div class="app-header" id="appHeader" onclick="toggleDrawer()">
+            <img src="logo.png" alt="Logo YMAP" onerror="this.style.display='none'">
+            <h2>YAYASAN MUSLIM<br>ACEH PEDULI</h2>
+        </div>
+        <div class="drawer-wrapper" id="drawerButton">
+            <button id="btnBukaForm" class="btn-blue btn-tambah" onclick="bukaForm()">+ Tambah Pegawai</button>
+        </div>
     </div>
 
     <div id="loginScreen" class="glass-panel hide-on-verify" style="margin-top: 10px;">
@@ -204,8 +235,6 @@
 
     <div id="dashboardScreen" class="hide-on-verify">
         
-        <button id="btnBukaForm" class="btn-blue" onclick="bukaForm()" style="width: auto; min-width: 200px; padding: 14px 28px; margin-bottom: 25px;">+ Tambah Pegawai</button>
-
         <div class="glass-panel" id="adminPanel" style="display: none;">
             <h2 id="formTitle" style="text-align: center; margin-bottom: 20px; color: var(--ymap-blue-dark);">Registrasi Pegawai</h2>
             <form id="ymapForm" style="width: 100%;">
@@ -273,10 +302,17 @@
         function bukaConfirm(id) { hapusModeId = id; document.getElementById('confirmOverlay').style.display = 'flex'; }
         function tutupConfirm() { hapusModeId = null; document.getElementById('confirmOverlay').style.display = 'none'; }
 
-        // --- FIX LOGIKA QR CODE: WAJIB AMBIL DATA WALAU BELUM LOGIN ---
+        // --- FUNGSI TOGGLE LACI ANIMASI ---
+        function toggleDrawer() {
+            // Hanya bisa buka laci kalau sudah login (layar dashboard aktif)
+            if (document.getElementById('dashboardScreen').style.display === 'flex') {
+                const drawer = document.getElementById('drawerButton');
+                drawer.classList.toggle('open');
+            }
+        }
+
         function cekLogin() {
             if(window.location.search.includes('verify=')) {
-                // Jangan blokir, langsung eksekusi ambil data untuk Verifikasi QR!
                 fetchPegawai(); 
                 return;
             }
@@ -289,6 +325,7 @@
             } else {
                 document.getElementById('loginScreen').style.display = 'flex';
                 document.getElementById('dashboardScreen').style.display = 'none';
+                document.getElementById('drawerButton').classList.remove('open'); // Pastikan laci tertutup saat logout
             }
         }
 
@@ -313,6 +350,7 @@
         function bukaForm() {
             document.getElementById('adminPanel').style.display = 'flex';
             document.getElementById('btnBukaForm').style.display = 'none';
+            document.getElementById('drawerButton').classList.remove('open'); // Tutup laci otomatis
             document.getElementById('ymapForm').reset();
             editModeId = null;
             document.getElementById('formTitle').innerText = "Registrasi Pegawai Baru";
@@ -323,7 +361,7 @@
 
         function tutupForm() {
             document.getElementById('adminPanel').style.display = 'none';
-            document.getElementById('btnBukaForm').style.display = 'block';
+            document.getElementById('btnBukaForm').style.display = 'block'; // Kembalikan tombol di laci
             document.getElementById('ymapForm').reset();
             editModeId = null;
         }
@@ -336,7 +374,6 @@
                 const urlParams = new URLSearchParams(window.location.search);
                 const verifyId = urlParams.get('verify'); 
 
-                // INI YANG AKAN MUNCUL SAAT DI SCAN
                 if(verifyId) {
                     const emp = globalData.find(e => e.fileId === verifyId);
                     document.getElementById('verifyOverlay').style.display = 'flex';
@@ -412,6 +449,7 @@
             
             document.getElementById('adminPanel').style.display = 'flex';
             document.getElementById('btnBukaForm').style.display = 'none';
+            document.getElementById('drawerButton').classList.remove('open');
             document.getElementById('formTitle').innerText = "Update Data Pegawai";
 
             document.getElementById('nama').value = emp.nama;
@@ -551,17 +589,15 @@
             areaDaftar.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
-        // --- FIX PDF HD ANTI GEPENG DAN PECAH ---
         async function downloadPDF() {
             tampilNotif("Menyiapkan PDF Kualitas HD...");
             const card = document.getElementById('id-card');
             
-            // Hindari glich posisi saat capture
             window.scrollTo(0, 0); 
             
             try {
                 const canvas = await html2canvas(card, { 
-                    scale: 4, // DIJAMIN HD
+                    scale: 4, 
                     useCORS: true, 
                     allowTaint: false,
                     backgroundColor: "#F2EFE8" 
@@ -570,7 +606,6 @@
                 const imgData = canvas.toDataURL('image/png', 1.0);
                 const { jsPDF } = window.jspdf;
                 
-                // FORMAT STANDAR ID CARD MUTLAK (54mm x 85.6mm)
                 const pdf = new jsPDF({
                     orientation: 'portrait',
                     unit: 'mm',
@@ -583,7 +618,6 @@
             } catch (err) { tampilNotif("Gagal membuat PDF. Coba lagi."); }
         }
 
-        // Panggil sistem login saat pertama kali dibuka
         window.onload = cekLogin;
     </script>
 </body>
