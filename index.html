@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YMAP Enterprise ID</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="logo.png">
+    <meta name="theme-color" content="#EAE6DF">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -104,7 +109,16 @@
     </div>
 
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbzQvLREqybEVszpuioTayyZovgXKqtNDrNFt_mxpWoc4RXiawn7JFVyUpnzfYR0LeHkIQ/exec"; 
+        // PWA REGISTRATION (Ini yang baru)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('Aplikasi Offline Siap!'))
+                    .catch(err => console.log('Gagal Offline', err));
+            });
+        }
+
+        const API_URL = "https://script.google.com/macros/s/AKfycbzQvLREqybEVszpuioTayyZovgXKqtNDrNFt_mxpWoc4RXiawn7JFVyUpnzfYR0LeHkIQ/exec"; // <--- JANGAN LUPA ISI API KAMU
         let globalData = [];
         let editModeId = null; 
         let hapusModeId = null;
@@ -208,7 +222,6 @@
             btn.disabled = false;
         }
 
-        // PERUBAHAN BESAR ADA DI FUNGSI INI
         async function lihatCard(id) {
             const emp = globalData.find(e => e.fileId === id);
             if(!emp) return;
@@ -231,7 +244,6 @@
             document.getElementById('id-card').style.display = 'flex';
             document.getElementById('id-card').scrollIntoView({ behavior: 'smooth' });
 
-            // Set Tombol Download ke Mode Loading
             const btnDl = document.getElementById('btnDownload');
             if(!window.location.search.includes('view=')) {
                 btnDl.style.display = 'block';
@@ -240,16 +252,14 @@
                 btnDl.style.background = "#95a5a6";
             }
 
-            // KUNCI UTAMANYA DISINI: Ambil kode gambar murni dari GAS
             try {
                 const resGambar = await fetch(API_URL + "?action=getImage&id=" + emp.fileId);
                 const base64Murni = await resGambar.text();
                 if(base64Murni.startsWith('data:image')) {
-                    photoEl.src = base64Murni; // Ganti gambar jadi kode Base64 murni
+                    photoEl.src = base64Murni; 
                 }
             } catch(e) { console.log("Gambar HD gagal dimuat"); }
 
-            // Hidupkan tombol download setelah gambar murni berhasil dimuat
             if(!window.location.search.includes('view=')) {
                 btnDl.innerText = "Download ID Card (PDF)";
                 btnDl.disabled = false;
