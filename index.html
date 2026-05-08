@@ -11,10 +11,15 @@
 
     <style>
         :root {
-            --bg: #F0F2F5; 
+            /* Warna Tema yang Ramah di Mata (Warm Beige/Bone) */
+            --bg: #EAE6DF; 
             --white: #ffffff;
-            --shadow: #d1d9e6;
-            --text: #44474b;
+            --shadow: #c5c1ba;
+            --text: #504e4a;
+            
+            /* Warna Khusus Kartu (Lebih kekuningan terang sedikit) */
+            --card-bg: #F2EFE8;
+            --card-shadow: #cfcbc4;
         }
 
         body {
@@ -24,96 +29,142 @@
             display: flex; flex-direction: column; align-items: center;
         }
 
+        /* PANEL UTAMA */
         .glass-panel {
-            background: var(--bg); border-radius: 30px; padding: 25px;
-            width: 100%; max-width: 400px;
+            background: var(--bg); border-radius: 35px; padding: 30px;
+            width: 100%; max-width: 420px;
             box-shadow: 20px 20px 60px var(--shadow), -20px -20px 60px var(--white);
             margin-bottom: 30px;
         }
 
-        input, select, button {
+        /* INPUT */
+        input, select {
             width: 100%; padding: 15px; margin: 10px 0;
-            border: none; border-radius: 15px; background: var(--bg);
+            border: none; border-radius: 18px; background: var(--bg);
             box-shadow: inset 6px 6px 12px var(--shadow), inset -6px -6px 12px var(--white);
-            box-sizing: border-box; font-family: inherit;
+            box-sizing: border-box; font-family: inherit; outline: none;
+            color: var(--text);
+        }
+        input:focus {
+            box-shadow: inset 8px 8px 16px var(--shadow), inset -8px -8px 16px var(--white);
         }
 
+        /* TOMBOL UTAMA */
         button {
-            box-shadow: 6px 6px 12px var(--shadow), -6px -6px 12px var(--white);
-            font-weight: 600; cursor: pointer; transition: 0.2s;
+            width: 100%; padding: 16px; margin: 15px 0 5px 0;
+            border: none; border-radius: 20px; 
+            background: var(--bg); color: var(--text);
+            font-family: inherit; font-weight: 600; cursor: pointer; 
+            transition: all 0.3s ease;
+            box-shadow: 8px 8px 16px var(--shadow), -8px -8px 16px var(--white), 
+                        inset 2px 2px 4px rgba(255,255,255,0.6), inset -2px -2px 4px rgba(0,0,0,0.03);
         }
-        button:active { box-shadow: inset 4px 4px 8px var(--shadow), inset -4px -4px 8px var(--white); }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 10px 10px 20px var(--shadow), -10px -10px 20px var(--white), 
+                        inset 2px 2px 4px rgba(255,255,255,0.6);
+        }
+        button:active {
+            transform: translateY(2px);
+            box-shadow: inset 6px 6px 12px var(--shadow), inset -6px -6px 12px var(--white);
+        }
 
+        /* KARTU ID - Warnanya lebih putih kekuningan */
         #id-card {
             width: 320px; height: 500px;
-            background: var(--bg); border-radius: 25px;
+            background: var(--card-bg); border-radius: 25px;
             box-shadow: 15px 15px 35px var(--shadow), -15px -15px 35px var(--white);
             position: relative; display: none; flex-direction: column; align-items: center; padding: 20px;
+            box-sizing: border-box;
         }
 
         img[src=""] { display: none; }
 
-        .logo-img { position: absolute; top: 20px; left: 20px; width: 60px; }
+        .logo-img { 
+            position: absolute; top: 15px; left: 20px; 
+            width: 90px; object-fit: contain;
+        }
         
         .profile-img-frame {
-            width: 130px; height: 160px; margin-top: 60px; border-radius: 20px;
-            background: var(--bg);
-            box-shadow: 10px 10px 20px var(--shadow), -10px -10px 20px var(--white);
+            width: 130px; height: 160px; margin-top: 80px; border-radius: 20px;
+            background: var(--card-bg);
+            box-shadow: 10px 10px 20px var(--card-shadow), -10px -10px 20px var(--white);
             overflow: hidden; display: flex; justify-content: center; align-items: center;
         }
         .profile-img-frame img { width: 100%; height: 100%; object-fit: cover; }
 
         .qr-area {
-            width: 70px; height: 70px; margin: 15px 0; padding: 5px;
-            background: white; border-radius: 12px; box-shadow: 5px 5px 10px var(--shadow);
+            width: 65px; height: 65px; margin: 15px 0; padding: 5px;
+            background: white; border-radius: 12px; box-shadow: 5px 5px 10px var(--card-shadow);
         }
 
         .info { text-align: center; }
-        .info h3 { margin: 5px 0; font-size: 1.2rem; }
+        .info h3 { margin: 5px 0; font-size: 1.2rem; color: #2d3436; }
         .info p { margin: 2px 0; font-size: 0.85rem; opacity: 0.8; }
 
-        .emp-list { width: 100%; max-width: 400px; }
+        .emp-list { width: 100%; max-width: 420px; }
         .emp-card {
-            background: var(--bg); padding: 15px; margin: 15px 0; border-radius: 20px;
-            box-shadow: 8px 8px 16px var(--shadow), -8px -8px 16px var(--white);
-            display: flex; justify-content: space-between; align-items: center;
+            background: var(--bg); padding: 20px; margin: 20px 0; border-radius: 25px;
+            box-shadow: 10px 10px 20px var(--shadow), -10px -10px 20px var(--white);
+            display: flex; flex-direction: column; gap: 15px;
         }
+        .emp-info { border-bottom: 2px solid #d3cec4; padding-bottom: 10px; }
+        
+        .action-group { display: flex; gap: 10px; flex-wrap: wrap; justify-content: space-between; }
+        .action-group button { margin: 0; padding: 10px; width: 47%; font-size: 12px; border-radius: 15px; }
 
+        /* POPUP NOTIFIKASI CUSTOM (Alert & Confirm) */
         .custom-notif {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            background: var(--bg); padding: 30px; border-radius: 25px;
-            box-shadow: 20px 20px 60px var(--shadow), -20px -20px 60px var(--white);
-            z-index: 9999; text-align: center; display: none; flex-direction: column; align-items: center;
-            width: 80%; max-width: 300px;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(234, 230, 223, 0.8); backdrop-filter: blur(5px);
+            z-index: 9999; display: none; justify-content: center; align-items: center;
         }
+        .notif-box {
+            background: var(--bg); padding: 30px; border-radius: 30px;
+            box-shadow: 20px 20px 60px var(--shadow), -20px -20px 60px var(--white);
+            text-align: center; width: 80%; max-width: 300px;
+        }
+        .btn-group-notif { display: flex; gap: 10px; margin-top: 20px; }
     </style>
 </head>
 <body>
 
-    <div id="notifBox" class="custom-notif">
-        <p id="notifText">Pesan disini</p>
-        <button onclick="document.getElementById('notifBox').style.display='none'">OK</button>
+    <div id="notifOverlay" class="custom-notif">
+        <div class="notif-box">
+            <p id="notifText" style="font-weight: 600;">Pesan disini</p>
+            <button onclick="tutupNotif()">Tutup</button>
+        </div>
+    </div>
+
+    <div id="confirmOverlay" class="custom-notif">
+        <div class="notif-box">
+            <p style="font-weight: 600;">Yakin mau hapus data pegawai ini?</p>
+            <div class="btn-group-notif">
+                <button onclick="tutupConfirm()" style="color: #504e4a;">Batal</button>
+                <button onclick="eksekusiHapus()" style="color: #c0392b;">Ya, Hapus</button>
+            </div>
+        </div>
     </div>
 
     <div class="glass-panel">
-        <h2 style="text-align: center;">YMAP Registration</h2>
+        <h2 style="text-align: center; margin-bottom: 25px;">YMAP Registration</h2>
         <form id="ymapForm">
             <input type="text" id="nama" placeholder="Nama Lengkap" required>
             <input type="text" id="jabatan" placeholder="Jabatan" required>
             <input type="text" id="no_hp" placeholder="Nomor HP / WA" required>
             <input type="text" id="alamat" placeholder="Alamat Sesuai KTP" required>
-            <p style="font-size: 12px; margin: 10px 0 0 5px;">Foto Profil:</p>
+            <p style="font-size: 12px; margin: 15px 0 5px 10px; opacity: 0.7; font-weight: 600;">Upload Foto Profil:</p>
             <input type="file" id="foto" accept="image/*" required>
-            <p style="font-size: 12px; margin: 10px 0 0 5px;">Foto KTP:</p>
+            <p style="font-size: 12px; margin: 15px 0 5px 10px; opacity: 0.7; font-weight: 600;">Upload Foto KTP:</p>
             <input type="file" id="ktp" accept="image/*" required>
             <button type="button" onclick="simpanData()" id="btnSubmit">Daftarkan Pegawai</button>
         </form>
     </div>
 
     <div id="id-card">
-        <img src="logo.png" id="cardLogo" class="logo-img" onerror="this.style.display='none'"> 
+        <img src="logo.png" id="cardLogo" class="logo-img" crossorigin="anonymous" onerror="this.style.display='none'"> 
         <div class="profile-img-frame">
-            <img src="" id="cardPhoto">
+            <img src="" id="cardPhoto" crossorigin="anonymous">
         </div>
         <div id="cardQr" class="qr-area"></div>
         <div class="info">
@@ -121,23 +172,39 @@
             <h3 id="cardNama" style="text-transform: uppercase;"></h3>
             <p id="cardJabatan"></p>
             <p id="cardHp"></p>
-            <p style="margin-top: 10px; color: #27ae60; font-weight: bold; font-size: 10px;">PEGAWAI SAH YMAP</p>
+            <p style="margin-top: 15px; color: #27ae60; font-weight: bold; font-size: 10px; letter-spacing: 1px;">PEGAWAI SAH YMAP</p>
         </div>
     </div>
-    <button id="btnDownload" style="display:none; width: 320px; margin-top: 10px;" onclick="downloadPDF()">Download PDF (ATM Size)</button>
+    
+    <button id="btnDownload" style="display:none; width: 100%; max-width: 320px; margin-top: 15px; background: #27ae60; color: white;" onclick="downloadPDF()">Download ID Card (PDF)</button>
 
     <div class="emp-list" id="empListArea">
-        <h3 style="text-align: center;">Daftar Pegawai</h3>
-        </div>
+        <h3 style="text-align: center; margin-top: 30px;">Daftar Pegawai</h3>
+    </div>
 
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbywJh2G_hphBVqCPbXhiHNB_E8EutOddDK4yL9Xdo3KAkTbJx9Dd0N9ZNwrbzp__DzeXw/exec"; 
+        const API_URL = "https://script.google.com/macros/s/AKfycbwt_vVjCRGUO2d7PkBfmI16xqiVVzQZJ48XIITtDEXlmuPIoRWn8p7oHM0qoMUaTuTS8A/exec"; // <--- JANGAN LUPA ISI INI LAGI
         let globalData = [];
         let editModeId = null; 
+        let hapusModeId = null;
 
+        // FUNGSI NOTIFIKASI CUSTOM
         function tampilNotif(pesan) {
             document.getElementById('notifText').innerText = pesan;
-            document.getElementById('notifBox').style.display = 'flex';
+            document.getElementById('notifOverlay').style.display = 'flex';
+        }
+        function tutupNotif() {
+            document.getElementById('notifOverlay').style.display = 'none';
+        }
+
+        // FUNGSI KONFIRMASI HAPUS CUSTOM
+        function bukaConfirm(id) {
+            hapusModeId = id;
+            document.getElementById('confirmOverlay').style.display = 'flex';
+        }
+        function tutupConfirm() {
+            hapusModeId = null;
+            document.getElementById('confirmOverlay').style.display = 'none';
         }
 
         async function fetchPegawai() {
@@ -145,17 +212,20 @@
                 const res = await fetch(API_URL);
                 globalData = await res.json();
                 const container = document.getElementById('empListArea');
-                container.innerHTML = '<h3 style="text-align: center;">Daftar Pegawai</h3>';
+                container.innerHTML = '<h3 style="text-align: center; margin-top: 30px;">Daftar Pegawai</h3>';
                 
                 globalData.forEach(emp => {
                     container.innerHTML += `
                         <div class="emp-card">
-                            <div><b>${emp.nama}</b><br><small>${emp.jabatan}</small></div>
-                            <div style="display:flex; gap:5px; flex-wrap:wrap; justify-content:flex-end; width:150px;">
-                                <button onclick="lihatCard('${emp.fileId}')" style="padding: 5px; font-size:10px; width:45%;">Card</button>
-                                <button onclick="window.open('https://drive.google.com/uc?id=${emp.id_ktp_file}')" style="padding: 5px; font-size:10px; width:45%;">KTP</button>
-                                <button onclick="siapkanEdit('${emp.fileId}')" style="padding: 5px; font-size:10px; width:45%; background:#f1c40f;">Edit</button>
-                                <button onclick="hapusPegawai('${emp.fileId}')" style="padding: 5px; font-size:10px; width:45%; background:#e74c3c; color:white;">Hapus</button>
+                            <div class="emp-info">
+                                <b style="font-size: 1.1rem;">${emp.nama}</b><br>
+                                <small style="opacity: 0.8;">${emp.jabatan}</small>
+                            </div>
+                            <div class="action-group">
+                                <button onclick="lihatCard('${emp.fileId}')" style="color: #2980b9;">Lihat Card</button>
+                                <button onclick="window.open('https://drive.google.com/uc?id=${emp.id_ktp_file}')" style="color: #8e44ad;">Lihat KTP</button>
+                                <button onclick="siapkanEdit('${emp.fileId}')" style="color: #d35400;">Edit Data</button>
+                                <button onclick="bukaConfirm('${emp.fileId}')" style="color: #c0392b;">Hapus</button>
                             </div>
                         </div>`;
                 });
@@ -179,14 +249,18 @@
             window.scrollTo({ top: 0, behavior: 'smooth' }); 
         }
 
-        async function hapusPegawai(id) {
-            if(!confirm("Yakin mau hapus data pegawai ini?")) return;
-            tampilNotif("Menghapus data...");
+        // EKSEKUSI HAPUS (Setelah klik YA di Custom Confirm)
+        async function eksekusiHapus() {
+            tutupConfirm();
+            if(!hapusModeId) return;
+            
+            tampilNotif("Sedang menghapus data...");
             try {
-                await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: "delete", fileId: id }) });
-                tampilNotif("Data terhapus!");
+                await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: "delete", fileId: hapusModeId }) });
+                tampilNotif("Data berhasil terhapus!");
                 fetchPegawai(); 
             } catch(e) { tampilNotif("Gagal menghapus data."); }
+            hapusModeId = null;
         }
 
         async function simpanData() {
@@ -228,7 +302,7 @@
 
             try {
                 await fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) });
-                tampilNotif(editModeId ? "Data diupdate!" : "Pegawai baru didaftarkan!");
+                tampilNotif(editModeId ? "Data berhasil diupdate!" : "Pegawai baru didaftarkan!");
                 
                 document.getElementById('ymapForm').reset();
                 editModeId = null;
@@ -237,7 +311,7 @@
                 document.getElementById('ktp').required = true;
                 
                 fetchPegawai(); 
-            } catch(e) { tampilNotif("Terjadi kesalahan."); btn.disabled = false; }
+            } catch(e) { tampilNotif("Terjadi kesalahan sistem."); btn.disabled = false; }
             
             btn.disabled = false;
         }
@@ -259,7 +333,7 @@
 
             document.getElementById('cardQr').innerHTML = "";
             new QRCode(document.getElementById('cardQr'), {
-                text: `YMAP - ${emp.nama} - ${emp.jabatan}`, width: 60, height: 60
+                text: `YMAP - ${emp.nama} - ${emp.jabatan}`, width: 65, height: 65
             });
 
             document.getElementById('id-card').style.display = 'flex';
@@ -270,14 +344,27 @@
         async function downloadPDF() {
             tampilNotif("Menyiapkan PDF...");
             const card = document.getElementById('id-card');
-            const canvas = await html2canvas(card, { scale: 3, useCORS: true });
-            const imgData = canvas.toDataURL('image/png');
-            const { jsPDF } = window.jspdf;
             
-            const pdf = new jsPDF('p', 'mm', [85.6, 54]); 
-            pdf.addImage(imgData, 'PNG', 0, 0, 54, 85.6);
-            pdf.save(`ID_CARD_${document.getElementById('cardNama').innerText}.pdf`);
-            tampilNotif("PDF Berhasil Diunduh!");
+            await new Promise(resolve => setTimeout(resolve, 500));
+
+            try {
+                const canvas = await html2canvas(card, { 
+                    scale: 3, 
+                    useCORS: true, 
+                    allowTaint: false,
+                    backgroundColor: "#F2EFE8" 
+                });
+                const imgData = canvas.toDataURL('image/png');
+                const { jsPDF } = window.jspdf;
+                
+                const pdf = new jsPDF('p', 'mm', [85.6, 54]); 
+                pdf.addImage(imgData, 'PNG', 0, 0, 54, 85.6);
+                pdf.save(`ID_CARD_${document.getElementById('cardNama').innerText}.pdf`);
+                
+                tutupNotif();
+            } catch (err) {
+                tampilNotif("Gagal membuat PDF. Coba lagi.");
+            }
         }
 
         window.onload = fetchPegawai;
