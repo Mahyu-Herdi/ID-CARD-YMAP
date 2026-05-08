@@ -52,6 +52,8 @@
         .custom-notif { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(234, 230, 223, 0.8); backdrop-filter: blur(5px); z-index: 9999; display: none; justify-content: center; align-items: center; }
         .notif-box { background: var(--bg); padding: 30px; border-radius: 30px; box-shadow: 20px 20px 60px var(--shadow), -20px -20px 60px var(--white); text-align: center; width: 80%; max-width: 300px; }
         .btn-group-notif { display: flex; gap: 10px; margin-top: 20px; }
+
+        #card-action-btns { display: none; width: 100%; max-width: 320px; margin-top: 15px; flex-direction: column; gap: 10px; }
     </style>
 </head>
 <body>
@@ -65,10 +67,10 @@
 
     <div id="confirmOverlay" class="custom-notif">
         <div class="notif-box">
-            <p style="font-weight: 600;">Yakin mau hapus data pegawai ini?</p>
+            <p style="font-weight: 600; color: #c0392b;">Yakin mau hapus data pegawai ini secara permanen?</p>
             <div class="btn-group-notif">
                 <button onclick="tutupConfirm()" style="color: #504e4a;">Batal</button>
-                <button onclick="eksekusiHapus()" style="color: #c0392b;">Ya, Hapus</button>
+                <button onclick="eksekusiHapus()" style="color: #c0392b;">Ya, Hapus!</button>
             </div>
         </div>
     </div>
@@ -102,14 +104,19 @@
         </div>
     </div>
     
-    <button id="btnDownload" style="display:none; width: 100%; max-width: 320px; margin-top: 15px; background: #27ae60; color: white;" onclick="downloadPDF()">Download ID Card (PDF)</button>
+    <div id="card-action-btns">
+        <button id="btnDownload" style="background: #27ae60; color: white; margin: 0;" onclick="downloadPDF()">Download ID Card (PDF)</button>
+        <button onclick="tutupCard()" style="background: #e74c3c; color: white; margin: 0;">Tutup Preview Card</button>
+    </div>
 
-    <div class="emp-list" id="empListArea">
+    <div class="emp-list">
         <h3 style="text-align: center; margin-top: 30px;">Daftar Pegawai</h3>
+        <input type="text" id="inputCari" placeholder="🔍 Cari nama atau jabatan..." onkeyup="cariPegawai()" style="margin-bottom: 10px;">
+        
+        <div id="empListArea"></div>
     </div>
 
     <script>
-        // PWA REGISTRATION (Ini yang baru)
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('sw.js')
@@ -118,7 +125,7 @@
             });
         }
 
-        const API_URL = "https://script.google.com/macros/s/AKfycbzQvLREqybEVszpuioTayyZovgXKqtNDrNFt_mxpWoc4RXiawn7JFVyUpnzfYR0LeHkIQ/exec"; // <--- JANGAN LUPA ISI API KAMU
+        const API_URL = "https://script.google.com/macros/s/AKfycbzQvLREqybEVszpuioTayyZovgXKqtNDrNFt_mxpWoc4RXiawn7JFVyUpnzfYR0LeHkIQ/exec"; // <--- JANGAN LUPA ISI API KAMU DISINI
         let globalData = [];
         let editModeId = null; 
         let hapusModeId = null;
@@ -137,29 +144,51 @@
 
                 if(viewId) {
                     document.getElementById('adminPanel').style.display = 'none';
-                    document.getElementById('empListArea').style.display = 'none';
+                    document.querySelector('.emp-list').style.display = 'none';
                     lihatCard(viewId);
                     return; 
                 }
 
-                const container = document.getElementById('empListArea');
-                container.innerHTML = '<h3 style="text-align: center; margin-top: 30px;">Daftar Pegawai</h3>';
-                globalData.forEach(emp => {
-                    container.innerHTML += `
-                        <div class="emp-card">
-                            <div class="emp-info">
-                                <b style="font-size: 1.1rem;">${emp.nama}</b><br>
-                                <small style="opacity: 0.8;">${emp.jabatan}</small>
-                            </div>
-                            <div class="action-group">
-                                <button onclick="lihatCard('${emp.fileId}')" style="color: #2980b9;">Lihat Card</button>
-                                <button onclick="window.open('https://drive.google.com/uc?id=${emp.id_ktp_file}')" style="color: #8e44ad;">Lihat KTP</button>
-                                <button onclick="siapkanEdit('${emp.fileId}')" style="color: #d35400;">Edit Data</button>
-                                <button onclick="bukaConfirm('${emp.fileId}')" style="color: #c0392b;">Hapus</button>
-                            </div>
-                        </div>`;
-                });
+                // Render List Awal
+                renderList(globalData);
             } catch(e) { tampilNotif("Gagal memuat daftar pegawai."); }
+        }
+
+        // FUNGSI RENDER LIST (Supaya gampang dipakai buat pencarian)
+        function renderList(dataArray) {
+            const container = document.getElementById('empListArea');
+            container.innerHTML = ''; 
+            
+            if (dataArray.length === 0) {
+                container.innerHTML = '<p style="text-align:center; opacity:0.6; margin-top:20px;">Pegawai tidak ditemukan.</p>';
+                return;
+            }
+
+            dataArray.forEach(emp => {
+                container.innerHTML += `
+                    <div class="emp-card">
+                        <div class="emp-info">
+                            <b style="font-size: 1.1rem;">${emp.nama}</b><br>
+                            <small style="opacity: 0.8;">${emp.jabatan}</small>
+                        </div>
+                        <div class="action-group">
+                            <button onclick="lihatCard('${emp.fileId}')" style="color: #2980b9;">Lihat Card</button>
+                            <button onclick="window.open('https://drive.google.com/uc?id=${emp.id_ktp_file}')" style="color: #8e44ad;">Lihat KTP</button>
+                            <button onclick="siapkanEdit('${emp.fileId}')" style="color: #d35400;">Edit Data</button>
+                            <button onclick="bukaConfirm('${emp.fileId}')" style="color: #c0392b;">Hapus</button>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        // FUNGSI PENCARIAN PEGAWAI LIVE
+        function cariPegawai() {
+            const keyword = document.getElementById('inputCari').value.toLowerCase();
+            const filteredData = globalData.filter(emp => 
+                emp.nama.toLowerCase().includes(keyword) || 
+                emp.jabatan.toLowerCase().includes(keyword)
+            );
+            renderList(filteredData);
         }
 
         function siapkanEdit(id) {
@@ -175,13 +204,28 @@
         }
 
         async function eksekusiHapus() {
-            tutupConfirm();
             if(!hapusModeId) return;
+            tutupConfirm(); 
             tampilNotif("Sedang menghapus data...");
+            
             try {
-                await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: "delete", fileId: hapusModeId }) });
-                tampilNotif("Data berhasil terhapus!"); fetchPegawai(); 
-            } catch(e) { tampilNotif("Gagal menghapus data."); }
+                const response = await fetch(API_URL, { 
+                    method: 'POST', 
+                    body: JSON.stringify({ action: "delete", fileId: hapusModeId }) 
+                });
+                
+                const result = await response.json();
+                if(result.status === "success") {
+                    tutupNotif(); 
+                    tampilNotif("Data berhasil dihapus!");
+                    document.getElementById('inputCari').value = ""; // Reset kolom cari
+                    fetchPegawai(); 
+                } else {
+                    tampilNotif("Gagal menghapus dari Drive.");
+                }
+            } catch(e) { 
+                tampilNotif("Gagal menghapus data. Periksa koneksi."); 
+            }
             hapusModeId = null;
         }
 
@@ -217,6 +261,7 @@
                 document.getElementById('ymapForm').reset(); editModeId = null; 
                 document.getElementById('btnSubmit').innerText = "Daftarkan Pegawai";
                 document.getElementById('foto').required = true; document.getElementById('ktp').required = true;
+                document.getElementById('inputCari').value = ""; // Reset kolom pencarian
                 fetchPegawai(); 
             } catch(e) { tampilNotif("Terjadi kesalahan sistem."); btn.disabled = false; }
             btn.disabled = false;
@@ -234,7 +279,7 @@
 
             const photoEl = document.getElementById('cardPhoto');
             photoEl.style.display = 'block';
-            photoEl.src = emp.photoUrl; // Pasang URL biasa dulu sebagai loading awal
+            photoEl.src = emp.photoUrl; 
 
             const urlUtama = window.location.href.split('?')[0]; 
             const linkVerifikasi = `${urlUtama}?view=${emp.fileId}`;
@@ -242,15 +287,18 @@
             new QRCode(document.getElementById('cardQr'), { text: linkVerifikasi, width: 65, height: 65 });
 
             document.getElementById('id-card').style.display = 'flex';
-            document.getElementById('id-card').scrollIntoView({ behavior: 'smooth' });
-
+            
+            const btnContainer = document.getElementById('card-action-btns');
             const btnDl = document.getElementById('btnDownload');
+
             if(!window.location.search.includes('view=')) {
-                btnDl.style.display = 'block';
+                btnContainer.style.display = 'flex';
                 btnDl.innerText = "Memuat Kualitas HD... Sabar Ya";
                 btnDl.disabled = true;
                 btnDl.style.background = "#95a5a6";
             }
+
+            document.getElementById('id-card').scrollIntoView({ behavior: 'smooth' });
 
             try {
                 const resGambar = await fetch(API_URL + "?action=getImage&id=" + emp.fileId);
@@ -265,6 +313,12 @@
                 btnDl.disabled = false;
                 btnDl.style.background = "#27ae60";
             }
+        }
+
+        function tutupCard() {
+            document.getElementById('id-card').style.display = 'none';
+            document.getElementById('card-action-btns').style.display = 'none';
+            document.querySelector('.emp-list').scrollIntoView({ behavior: 'smooth' });
         }
 
         async function downloadPDF() {
