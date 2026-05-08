@@ -11,105 +11,41 @@
 
     <style>
         :root {
-            var(--bg): #EAE6DF; 
-            --white: #ffffff;
-            --shadow: #c5c1ba;
-            --text: #504e4a;
-            --card-bg: #F2EFE8;
-            --card-shadow: #cfcbc4;
+            --bg: #EAE6DF; --white: #ffffff; --shadow: #c5c1ba; --text: #504e4a;
+            --card-bg: #F2EFE8; --card-shadow: #cfcbc4;
         }
 
-        body {
-            font-family: 'Lexend', sans-serif;
-            background-color: #EAE6DF; color: var(--text);
-            margin: 0; padding: 20px;
-            display: flex; flex-direction: column; align-items: center;
-        }
+        body { font-family: 'Lexend', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
 
-        .glass-panel {
-            background: #EAE6DF; border-radius: 35px; padding: 30px;
-            width: 100%; max-width: 420px;
-            box-shadow: 20px 20px 60px var(--shadow), -20px -20px 60px var(--white);
-            margin-bottom: 30px;
-        }
+        .glass-panel { background: var(--bg); border-radius: 35px; padding: 30px; width: 100%; max-width: 420px; box-shadow: 20px 20px 60px var(--shadow), -20px -20px 60px var(--white); margin-bottom: 30px; }
 
-        input, select {
-            width: 100%; padding: 15px; margin: 10px 0;
-            border: none; border-radius: 18px; background: #EAE6DF;
-            box-shadow: inset 6px 6px 12px var(--shadow), inset -6px -6px 12px var(--white);
-            box-sizing: border-box; font-family: inherit; outline: none;
-            color: var(--text);
-        }
+        input, select { width: 100%; padding: 15px; margin: 10px 0; border: none; border-radius: 18px; background: var(--bg); box-shadow: inset 6px 6px 12px var(--shadow), inset -6px -6px 12px var(--white); box-sizing: border-box; font-family: inherit; outline: none; color: var(--text); }
         input:focus { box-shadow: inset 8px 8px 16px var(--shadow), inset -8px -8px 16px var(--white); }
 
-        button {
-            width: 100%; padding: 16px; margin: 15px 0 5px 0;
-            border: none; border-radius: 20px; 
-            background: #EAE6DF; color: var(--text);
-            font-family: inherit; font-weight: 600; cursor: pointer; 
-            transition: all 0.3s ease;
-            box-shadow: 8px 8px 16px var(--shadow), -8px -8px 16px var(--white), 
-                        inset 2px 2px 4px rgba(255,255,255,0.6), inset -2px -2px 4px rgba(0,0,0,0.03);
-        }
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 10px 10px 20px var(--shadow), -10px -10px 20px var(--white), 
-                        inset 2px 2px 4px rgba(255,255,255,0.6);
-        }
-        button:active {
-            transform: translateY(2px);
-            box-shadow: inset 6px 6px 12px var(--shadow), inset -6px -6px 12px var(--white);
-        }
+        button { width: 100%; padding: 16px; margin: 15px 0 5px 0; border: none; border-radius: 20px; background: var(--bg); color: var(--text); font-family: inherit; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: 8px 8px 16px var(--shadow), -8px -8px 16px var(--white), inset 2px 2px 4px rgba(255,255,255,0.6), inset -2px -2px 4px rgba(0,0,0,0.03); }
+        button:hover { transform: translateY(-2px); box-shadow: 10px 10px 20px var(--shadow), -10px -10px 20px var(--white), inset 2px 2px 4px rgba(255,255,255,0.6); }
+        button:active { transform: translateY(2px); box-shadow: inset 6px 6px 12px var(--shadow), inset -6px -6px 12px var(--white); }
+        button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: inset 6px 6px 12px var(--shadow), inset -6px -6px 12px var(--white); }
 
-        #id-card {
-            width: 320px; height: 500px;
-            background: var(--card-bg); border-radius: 25px;
-            box-shadow: 15px 15px 35px var(--shadow), -15px -15px 35px var(--white);
-            position: relative; display: none; flex-direction: column; align-items: center; padding: 20px;
-            box-sizing: border-box; margin: 0 auto;
-        }
-
-        img[src=""] { display: none; }
-
-        .logo-img { position: absolute; top: 15px; left: 20px; width: 90px; object-fit: contain; }
+        #id-card { width: 320px; height: 500px; background: var(--card-bg); border-radius: 25px; box-shadow: 15px 15px 35px var(--shadow), -15px -15px 35px var(--white); position: relative; display: none; flex-direction: column; align-items: center; padding: 20px; box-sizing: border-box; margin: 0 auto; }
         
-        .profile-img-frame {
-            width: 130px; height: 160px; margin-top: 80px; border-radius: 20px;
-            background: var(--card-bg);
-            box-shadow: 10px 10px 20px var(--card-shadow), -10px -10px 20px var(--white);
-            overflow: hidden; display: flex; justify-content: center; align-items: center;
-        }
+        img[src=""] { display: none; }
+        .logo-img { position: absolute; top: 15px; left: 20px; width: 90px; object-fit: contain; }
+        .profile-img-frame { width: 130px; height: 160px; margin-top: 80px; border-radius: 20px; background: var(--card-bg); box-shadow: 10px 10px 20px var(--card-shadow), -10px -10px 20px var(--white); overflow: hidden; display: flex; justify-content: center; align-items: center; }
         .profile-img-frame img { width: 100%; height: 100%; object-fit: cover; }
-
-        .qr-area {
-            width: 65px; height: 65px; margin: 15px 0; padding: 5px;
-            background: white; border-radius: 12px; box-shadow: 5px 5px 10px var(--card-shadow);
-        }
-
+        .qr-area { width: 65px; height: 65px; margin: 15px 0; padding: 5px; background: white; border-radius: 12px; box-shadow: 5px 5px 10px var(--card-shadow); }
         .info { text-align: center; }
         .info h3 { margin: 5px 0; font-size: 1.2rem; color: #2d3436; text-transform: uppercase;}
         .info p { margin: 2px 0; font-size: 0.85rem; opacity: 0.8; }
 
         .emp-list { width: 100%; max-width: 420px; }
-        .emp-card {
-            background: #EAE6DF; padding: 20px; margin: 20px 0; border-radius: 25px;
-            box-shadow: 10px 10px 20px var(--shadow), -10px -10px 20px var(--white);
-            display: flex; flex-direction: column; gap: 15px;
-        }
+        .emp-card { background: var(--bg); padding: 20px; margin: 20px 0; border-radius: 25px; box-shadow: 10px 10px 20px var(--shadow), -10px -10px 20px var(--white); display: flex; flex-direction: column; gap: 15px; }
         .emp-info { border-bottom: 2px solid #d3cec4; padding-bottom: 10px; }
         .action-group { display: flex; gap: 10px; flex-wrap: wrap; justify-content: space-between; }
         .action-group button { margin: 0; padding: 10px; width: 47%; font-size: 12px; border-radius: 15px; }
 
-        .custom-notif {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(234, 230, 223, 0.8); backdrop-filter: blur(5px);
-            z-index: 9999; display: none; justify-content: center; align-items: center;
-        }
-        .notif-box {
-            background: #EAE6DF; padding: 30px; border-radius: 30px;
-            box-shadow: 20px 20px 60px var(--shadow), -20px -20px 60px var(--white);
-            text-align: center; width: 80%; max-width: 300px;
-        }
+        .custom-notif { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(234, 230, 223, 0.8); backdrop-filter: blur(5px); z-index: 9999; display: none; justify-content: center; align-items: center; }
+        .notif-box { background: var(--bg); padding: 30px; border-radius: 30px; box-shadow: 20px 20px 60px var(--shadow), -20px -20px 60px var(--white); text-align: center; width: 80%; max-width: 300px; }
         .btn-group-notif { display: flex; gap: 10px; margin-top: 20px; }
     </style>
 </head>
@@ -158,7 +94,7 @@
             <h3 id="cardNama"></h3>
             <p id="cardJabatan"></p>
             <p id="cardHp"></p>
-            </div>
+        </div>
     </div>
     
     <button id="btnDownload" style="display:none; width: 100%; max-width: 320px; margin-top: 15px; background: #27ae60; color: white;" onclick="downloadPDF()">Download ID Card (PDF)</button>
@@ -168,7 +104,7 @@
     </div>
 
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbwt_vVjCRGUO2d7PkBfmI16xqiVVzQZJ48XIITtDEXlmuPIoRWn8p7oHM0qoMUaTuTS8A/exec"; 
+        const API_URL = "https://script.google.com/macros/s/AKfycbzQvLREqybEVszpuioTayyZovgXKqtNDrNFt_mxpWoc4RXiawn7JFVyUpnzfYR0LeHkIQ/exec"; 
         let globalData = [];
         let editModeId = null; 
         let hapusModeId = null;
@@ -182,20 +118,16 @@
             try {
                 const res = await fetch(API_URL);
                 globalData = await res.json();
-                
-                // CEK JIKA INI MODE SCAN QR (Ada parameter ?view=ID_PEGAWAI di URL)
                 const urlParams = new URLSearchParams(window.location.search);
                 const viewId = urlParams.get('view');
 
                 if(viewId) {
-                    // Sembunyikan panel admin & list, tampilkan kartunya saja
                     document.getElementById('adminPanel').style.display = 'none';
                     document.getElementById('empListArea').style.display = 'none';
                     lihatCard(viewId);
-                    return; // Stop disini, nggak perlu render list
+                    return; 
                 }
 
-                // JIKA MODE NORMAL (ADMIN)
                 const container = document.getElementById('empListArea');
                 container.innerHTML = '<h3 style="text-align: center; margin-top: 30px;">Daftar Pegawai</h3>';
                 globalData.forEach(emp => {
@@ -223,10 +155,8 @@
             document.getElementById('jabatan').value = emp.jabatan;
             document.getElementById('no_hp').value = emp.no_hp;
             document.getElementById('alamat').value = emp.alamat;
-            editModeId = id; 
-            document.getElementById('btnSubmit').innerText = "Update Data Pegawai";
-            document.getElementById('foto').required = false; 
-            document.getElementById('ktp').required = false;
+            editModeId = id; document.getElementById('btnSubmit').innerText = "Update Data Pegawai";
+            document.getElementById('foto').required = false; document.getElementById('ktp').required = false;
             window.scrollTo({ top: 0, behavior: 'smooth' }); 
         }
 
@@ -236,8 +166,7 @@
             tampilNotif("Sedang menghapus data...");
             try {
                 await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: "delete", fileId: hapusModeId }) });
-                tampilNotif("Data berhasil terhapus!");
-                fetchPegawai(); 
+                tampilNotif("Data berhasil terhapus!"); fetchPegawai(); 
             } catch(e) { tampilNotif("Gagal menghapus data."); }
             hapusModeId = null;
         }
@@ -251,8 +180,7 @@
 
             const toBase64 = file => new Promise((resolve) => {
                 if(!file) return resolve(null);
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
+                const reader = new FileReader(); reader.readAsDataURL(file);
                 reader.onload = () => resolve(reader.result.split(',')[1]);
             });
 
@@ -272,15 +200,16 @@
             try {
                 await fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) });
                 tampilNotif(editModeId ? "Data berhasil diupdate!" : "Pegawai baru didaftarkan!");
-                document.getElementById('ymapForm').reset();
-                editModeId = null; document.getElementById('btnSubmit').innerText = "Daftarkan Pegawai";
+                document.getElementById('ymapForm').reset(); editModeId = null; 
+                document.getElementById('btnSubmit').innerText = "Daftarkan Pegawai";
                 document.getElementById('foto').required = true; document.getElementById('ktp').required = true;
                 fetchPegawai(); 
             } catch(e) { tampilNotif("Terjadi kesalahan sistem."); btn.disabled = false; }
             btn.disabled = false;
         }
 
-        function lihatCard(id) {
+        // PERUBAHAN BESAR ADA DI FUNGSI INI
+        async function lihatCard(id) {
             const emp = globalData.find(e => e.fileId === id);
             if(!emp) return;
 
@@ -292,33 +221,53 @@
 
             const photoEl = document.getElementById('cardPhoto');
             photoEl.style.display = 'block';
-            photoEl.src = emp.photoUrl;
+            photoEl.src = emp.photoUrl; // Pasang URL biasa dulu sebagai loading awal
 
-            // QR CODE BERISI LINK KE WEB INI
-            const urlUtama = window.location.href.split('?')[0]; // Ambil URL bersih
+            const urlUtama = window.location.href.split('?')[0]; 
             const linkVerifikasi = `${urlUtama}?view=${emp.fileId}`;
-
             document.getElementById('cardQr').innerHTML = "";
-            new QRCode(document.getElementById('cardQr'), {
-                text: linkVerifikasi, width: 65, height: 65
-            });
+            new QRCode(document.getElementById('cardQr'), { text: linkVerifikasi, width: 65, height: 65 });
 
             document.getElementById('id-card').style.display = 'flex';
-            
-            // Tampilkan tombol download HANYA jika bukan mode scan (Admin)
-            if(!window.location.search.includes('view=')) {
-                document.getElementById('btnDownload').style.display = 'block';
-            }
-            
             document.getElementById('id-card').scrollIntoView({ behavior: 'smooth' });
+
+            // Set Tombol Download ke Mode Loading
+            const btnDl = document.getElementById('btnDownload');
+            if(!window.location.search.includes('view=')) {
+                btnDl.style.display = 'block';
+                btnDl.innerText = "Memuat Kualitas HD... Sabar Ya";
+                btnDl.disabled = true;
+                btnDl.style.background = "#95a5a6";
+            }
+
+            // KUNCI UTAMANYA DISINI: Ambil kode gambar murni dari GAS
+            try {
+                const resGambar = await fetch(API_URL + "?action=getImage&id=" + emp.fileId);
+                const base64Murni = await resGambar.text();
+                if(base64Murni.startsWith('data:image')) {
+                    photoEl.src = base64Murni; // Ganti gambar jadi kode Base64 murni
+                }
+            } catch(e) { console.log("Gambar HD gagal dimuat"); }
+
+            // Hidupkan tombol download setelah gambar murni berhasil dimuat
+            if(!window.location.search.includes('view=')) {
+                btnDl.innerText = "Download ID Card (PDF)";
+                btnDl.disabled = false;
+                btnDl.style.background = "#27ae60";
+            }
         }
 
         async function downloadPDF() {
             tampilNotif("Menyiapkan PDF...");
             const card = document.getElementById('id-card');
-            await new Promise(resolve => setTimeout(resolve, 500));
+            
             try {
-                const canvas = await html2canvas(card, { scale: 3, useCORS: true, allowTaint: true, backgroundColor: "#F2EFE8" });
+                const canvas = await html2canvas(card, { 
+                    scale: 3, 
+                    useCORS: true, 
+                    allowTaint: false,
+                    backgroundColor: "#F2EFE8" 
+                });
                 const imgData = canvas.toDataURL('image/png');
                 const { jsPDF } = window.jspdf;
                 const pdf = new jsPDF('p', 'mm', [85.6, 54]); 
