@@ -29,7 +29,6 @@
             --card-bg: #F2EFE8; 
             --card-shadow: #d1cdc6;
             
-            /* Warna solid dari Logo YMAP */
             --ymap-red: #EA4349;
             --ymap-blue: #267CA5;
             --ymap-blue-dark: #1b5b7a;
@@ -41,7 +40,7 @@
             display: flex; flex-direction: column; align-items: center; 
         }
 
-        /* --- CLAYMORPHISM EMPUK --- */
+        /* CLAYMORPHISM PUFFY (Sangat empuk) */
         .glass-panel { 
             background: var(--bg); border-radius: 35px; padding: 30px 25px; 
             width: 92%; max-width: 400px; box-sizing: border-box;
@@ -60,14 +59,12 @@
         }
         input:focus { box-shadow: inset 8px 8px 16px var(--shadow), inset -8px -8px 16px var(--white); border: 1px solid var(--ymap-blue); }
 
-        /* Tombol Utama (Warna Logo) Claymorphism */
         button { 
             width: 100%; padding: 16px; margin: 15px 0 5px 0; border: none; border-radius: 22px; 
             font-family: inherit; font-weight: 600; font-size: 0.95rem;
             cursor: pointer; transition: all 0.2s ease; 
         }
         
-        /* Tema Tombol Biru Logo */
         .btn-blue {
             background: var(--ymap-blue); color: white;
             box-shadow: 8px 8px 16px var(--shadow), -8px -8px 16px var(--white), 
@@ -76,7 +73,6 @@
         .btn-blue:hover { transform: translateY(-2px); background: var(--ymap-blue-dark); box-shadow: 10px 10px 20px var(--shadow), -10px -10px 20px var(--white), inset 3px 3px 8px rgba(255,255,255,0.4); }
         .btn-blue:active { transform: translateY(2px); box-shadow: inset 6px 6px 12px rgba(0,0,0,0.2); }
 
-        /* Tema Tombol Merah Logo */
         .btn-red {
             background: var(--ymap-red); color: white;
             box-shadow: 8px 8px 16px var(--shadow), -8px -8px 16px var(--white), 
@@ -85,9 +81,9 @@
         .btn-red:hover { transform: translateY(-2px); filter: brightness(0.9); box-shadow: 10px 10px 20px var(--shadow), -10px -10px 20px var(--white), inset 3px 3px 8px rgba(255,255,255,0.4); }
         .btn-red:active { transform: translateY(2px); box-shadow: inset 6px 6px 12px rgba(0,0,0,0.2); }
 
-        /* --- ID CARD PRESISI STANDAR 54x86mm --- */
+        /* ID CARD - Presisi & Anti Pecah */
         #id-card { 
-            width: 320px; height: 507px; /* Fix rasio agar pas PDF dan gak gepeng */
+            width: 320px; height: 507px; 
             background: var(--card-bg); border-radius: 25px; 
             box-shadow: 15px 15px 30px var(--shadow), -15px -15px 30px var(--white),
                         inset 3px 3px 10px rgba(255,255,255,1); 
@@ -100,15 +96,18 @@
             z-index: 1;
         }
 
+        /* Perbaikan Seni Gelombang agar Support PDF HD */
         .shape-red {
-            position: absolute; top: -60px; right: -60px; width: 260px; height: 260px;
-            background: var(--ymap-red); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
-            opacity: 0.25; z-index: -1; filter: blur(25px); 
+            position: absolute; top: -30px; right: -30px; width: 100px; height: 100px;
+            background: transparent; border-radius: 50%;
+            z-index: -1; 
+            box-shadow: 0 0 90px 70px rgba(234, 67, 73, 0.4); /* Pakai shadow murni, dilarang pakai filter blur */
         }
         .shape-blue {
-            position: absolute; bottom: -70px; left: -70px; width: 260px; height: 260px;
-            background: var(--ymap-blue); border-radius: 60% 40% 30% 70% / 50% 40% 50% 60%;
-            opacity: 0.25; z-index: -1; filter: blur(25px);
+            position: absolute; bottom: -30px; left: -30px; width: 100px; height: 100px;
+            background: transparent; border-radius: 50%;
+            z-index: -1; 
+            box-shadow: 0 0 90px 70px rgba(38, 124, 165, 0.4); 
         }
 
         img[src=""] { display: none; }
@@ -135,7 +134,7 @@
         .info .id-text { font-weight: bold; color: var(--ymap-red); font-size: 10px; margin-bottom: 4px; letter-spacing: 1px;}
         .info .alamat-text { font-size: 0.75rem; font-weight: 500; color: #666; max-width: 260px; line-height: 1.2; margin-top: 6px;}
 
-        /* --- LAYOUT LIST & DASHBOARD --- */
+        /* LIST & DASHBOARD */
         .emp-list { width: 92%; max-width: 400px; box-sizing: border-box;}
         .emp-card { 
             background: var(--bg); padding: 22px; margin: 20px 0; border-radius: 25px; 
@@ -148,7 +147,6 @@
         .action-group button { margin: 0; padding: 10px; width: 47%; font-size: 12px; border-radius: 15px; background: var(--bg); box-shadow: 4px 4px 8px var(--shadow), -4px -4px 8px var(--white); color: var(--text); border: none;}
         .action-group button:active { box-shadow: inset 4px 4px 8px var(--shadow), inset -4px -4px 8px var(--white); }
 
-        /* Modal / Notifikasi */
         .custom-notif { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(234, 230, 223, 0.85); backdrop-filter: blur(5px); z-index: 9999; display: none; justify-content: center; align-items: center; }
         .notif-box { background: var(--bg); padding: 35px 25px; border-radius: 30px; box-shadow: 15px 15px 30px var(--shadow), -15px -15px 30px var(--white), inset 2px 2px 5px rgba(255,255,255,0.6); text-align: center; width: 85%; max-width: 300px; border: 1px solid rgba(255,255,255,0.5); }
         .btn-group-notif { display: flex; gap: 10px; margin-top: 20px; }
@@ -165,7 +163,6 @@
 
         #dashboardScreen { display: none; flex-direction: column; align-items: center; width: 100%; }
         
-        /* Tombol Logout */
         .btn-logout { background: transparent; border: none; color: var(--ymap-red); font-size: 12px; box-shadow: none; padding: 5px; width: auto; margin-top: 20px; text-decoration: underline; font-weight: 600; }
         .btn-logout:active { transform: none; box-shadow: none; background: transparent; }
     </style>
@@ -256,8 +253,9 @@
 
         <button onclick="prosesLogout()" class="btn-logout">Logout Admin</button>
 
-    </div> <script>
-        // Setup PWA
+    </div> 
+
+    <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('sw.js').catch(err => console.log('Gagal Offline', err));
@@ -270,22 +268,24 @@
         let editModeId = null; 
         let hapusModeId = null;
 
-        // FUNGSI UMUM NOTIFIKASI
         function tampilNotif(pesan) { document.getElementById('notifText').innerText = pesan; document.getElementById('notifOverlay').style.display = 'flex'; }
         function tutupNotif() { document.getElementById('notifOverlay').style.display = 'none'; }
         function bukaConfirm(id) { hapusModeId = id; document.getElementById('confirmOverlay').style.display = 'flex'; }
         function tutupConfirm() { hapusModeId = null; document.getElementById('confirmOverlay').style.display = 'none'; }
 
-        // --- SISTEM LOGIN ADMIN ---
+        // --- FIX LOGIKA QR CODE: WAJIB AMBIL DATA WALAU BELUM LOGIN ---
         function cekLogin() {
-            // Kalau lagi mode scan QR, biarkan bypass logic (sudah dihandle fetchPegawai)
-            if(window.location.search.includes('verify=')) return;
+            if(window.location.search.includes('verify=')) {
+                // Jangan blokir, langsung eksekusi ambil data untuk Verifikasi QR!
+                fetchPegawai(); 
+                return;
+            }
 
             const isLogin = localStorage.getItem('ymap_admin_login');
             if(isLogin === 'true') {
                 document.getElementById('loginScreen').style.display = 'none';
                 document.getElementById('dashboardScreen').style.display = 'flex';
-                fetchPegawai(); // Load data cuma kalau udah login
+                fetchPegawai(); 
             } else {
                 document.getElementById('loginScreen').style.display = 'flex';
                 document.getElementById('dashboardScreen').style.display = 'none';
@@ -310,7 +310,6 @@
             window.location.reload();
         }
 
-        // --- FUNGSI ADMIN & FORM ---
         function bukaForm() {
             document.getElementById('adminPanel').style.display = 'flex';
             document.getElementById('btnBukaForm').style.display = 'none';
@@ -337,6 +336,7 @@
                 const urlParams = new URLSearchParams(window.location.search);
                 const verifyId = urlParams.get('verify'); 
 
+                // INI YANG AKAN MUNCUL SAAT DI SCAN
                 if(verifyId) {
                     const emp = globalData.find(e => e.fileId === verifyId);
                     document.getElementById('verifyOverlay').style.display = 'flex';
@@ -507,7 +507,13 @@
             const urlUtama = window.location.href.split('?')[0]; 
             const linkVerifikasi = `${urlUtama}?verify=${emp.fileId}`;
             document.getElementById('cardQr').innerHTML = "";
-            new QRCode(document.getElementById('cardQr'), { text: linkVerifikasi, width: 70, height: 70 });
+            
+            new QRCode(document.getElementById('cardQr'), { 
+                text: linkVerifikasi, 
+                width: 70, 
+                height: 70,
+                correctLevel : QRCode.CorrectLevel.H 
+            });
 
             document.getElementById('id-card').style.display = 'flex';
             
@@ -534,7 +540,7 @@
             if(!window.location.search.includes('verify=')) {
                 btnDl.innerText = "Download ID Card (PDF)";
                 btnDl.disabled = false;
-                btnDl.style.background = "var(--ymap-blue)"; // Balikin warna tombol kalau siap
+                btnDl.style.background = "var(--ymap-blue)"; 
             }
         }
 
@@ -545,14 +551,17 @@
             areaDaftar.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
+        // --- FIX PDF HD ANTI GEPENG DAN PECAH ---
         async function downloadPDF() {
             tampilNotif("Menyiapkan PDF Kualitas HD...");
             const card = document.getElementById('id-card');
             
+            // Hindari glich posisi saat capture
+            window.scrollTo(0, 0); 
+            
             try {
-                // FIX: Scale dinaikin ke 4 biar bener-bener gak pecah
                 const canvas = await html2canvas(card, { 
-                    scale: 4, 
+                    scale: 4, // DIJAMIN HD
                     useCORS: true, 
                     allowTaint: false,
                     backgroundColor: "#F2EFE8" 
@@ -561,16 +570,20 @@
                 const imgData = canvas.toDataURL('image/png', 1.0);
                 const { jsPDF } = window.jspdf;
                 
-                // FIX: Memaksa ukuran PDF 54mm x 85.6mm (Standar mutlak ID Card fisik)
-                const pdf = new jsPDF('p', 'mm', [85.6, 54]); 
-                pdf.addImage(imgData, 'PNG', 0, 0, 54, 85.6);
+                // FORMAT STANDAR ID CARD MUTLAK (54mm x 85.6mm)
+                const pdf = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: [54, 85.6]
+                });
                 
+                pdf.addImage(imgData, 'PNG', 0, 0, 54, 85.6);
                 pdf.save(`ID_CARD_${document.getElementById('cardNama').innerText}.pdf`);
                 tutupNotif();
             } catch (err) { tampilNotif("Gagal membuat PDF. Coba lagi."); }
         }
 
-        // Panggil saat web diload
+        // Panggil sistem login saat pertama kali dibuka
         window.onload = cekLogin;
     </script>
 </body>
