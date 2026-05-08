@@ -11,36 +11,29 @@
 
     <style>
         :root {
-            --bg: #F0F2F5; /* Putih Tulang / Bone White */
+            --bg: #F0F2F5; 
             --white: #ffffff;
             --shadow: #d1d9e6;
             --text: #44474b;
-            --accent: #2d3436;
         }
 
         body {
             font-family: 'Lexend', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
+            background-color: var(--bg); color: var(--text);
             margin: 0; padding: 20px;
             display: flex; flex-direction: column; align-items: center;
         }
 
-        /* Claymorphism Container */
         .glass-panel {
-            background: var(--bg);
-            border-radius: 30px;
-            padding: 25px;
+            background: var(--bg); border-radius: 30px; padding: 25px;
             width: 100%; max-width: 400px;
             box-shadow: 20px 20px 60px var(--shadow), -20px -20px 60px var(--white);
             margin-bottom: 30px;
         }
 
-        /* Neumorphism Input */
         input, select, button {
             width: 100%; padding: 15px; margin: 10px 0;
-            border: none; border-radius: 15px;
-            background: var(--bg);
+            border: none; border-radius: 15px; background: var(--bg);
             box-shadow: inset 6px 6px 12px var(--shadow), inset -6px -6px 12px var(--white);
             box-sizing: border-box; font-family: inherit;
         }
@@ -48,54 +41,61 @@
         button {
             box-shadow: 6px 6px 12px var(--shadow), -6px -6px 12px var(--white);
             font-weight: 600; cursor: pointer; transition: 0.2s;
-            background: var(--bg);
         }
-
         button:active { box-shadow: inset 4px 4px 8px var(--shadow), inset -4px -4px 8px var(--white); }
 
-        /* ID Card Layout (ATM SIZE Scale) */
         #id-card {
             width: 320px; height: 500px;
-            background: var(--bg);
-            border-radius: 25px;
+            background: var(--bg); border-radius: 25px;
             box-shadow: 15px 15px 35px var(--shadow), -15px -15px 35px var(--white);
-            position: relative; overflow: hidden;
-            display: none; flex-direction: column; align-items: center; padding: 20px;
+            position: relative; display: none; flex-direction: column; align-items: center; padding: 20px;
         }
 
-        .logo-img { position: absolute; top: 20px; left: 20px; width: 50px; }
+        /* Biar icon broken gak muncul pas awal */
+        img[src=""] { display: none; }
+
+        .logo-img { position: absolute; top: 20px; left: 20px; width: 60px; }
         
         .profile-img-frame {
-            width: 140px; height: 170px;
-            margin-top: 70px; border-radius: 20px;
+            width: 130px; height: 160px; margin-top: 60px; border-radius: 20px;
             background: var(--bg);
             box-shadow: 10px 10px 20px var(--shadow), -10px -10px 20px var(--white);
-            overflow: hidden;
+            overflow: hidden; display: flex; justify-content: center; align-items: center;
         }
         .profile-img-frame img { width: 100%; height: 100%; object-fit: cover; }
 
         .qr-area {
-            width: 70px; height: 70px;
-            margin: 15px 0; padding: 5px;
-            background: white; border-radius: 12px;
-            box-shadow: 5px 5px 10px var(--shadow);
+            width: 70px; height: 70px; margin: 15px 0; padding: 5px;
+            background: white; border-radius: 12px; box-shadow: 5px 5px 10px var(--shadow);
         }
 
         .info { text-align: center; }
         .info h3 { margin: 5px 0; font-size: 1.2rem; }
         .info p { margin: 2px 0; font-size: 0.85rem; opacity: 0.8; }
 
-        /* List Styling */
         .emp-list { width: 100%; max-width: 400px; }
         .emp-card {
-            background: var(--bg);
-            padding: 15px; margin: 15px 0; border-radius: 20px;
+            background: var(--bg); padding: 15px; margin: 15px 0; border-radius: 20px;
             box-shadow: 8px 8px 16px var(--shadow), -8px -8px 16px var(--white);
             display: flex; justify-content: space-between; align-items: center;
+        }
+
+        /* Custom Notif */
+        .custom-notif {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: var(--bg); padding: 30px; border-radius: 25px;
+            box-shadow: 20px 20px 60px var(--shadow), -20px -20px 60px var(--white);
+            z-index: 9999; text-align: center; display: none; flex-direction: column; align-items: center;
+            width: 80%; max-width: 300px;
         }
     </style>
 </head>
 <body>
+
+    <div id="notifBox" class="custom-notif">
+        <p id="notifText">Pesan disini</p>
+        <button onclick="document.getElementById('notifBox').style.display='none'">OK</button>
+    </div>
 
     <div class="glass-panel">
         <h2 style="text-align: center;">YMAP Registration</h2>
@@ -113,97 +113,126 @@
     </div>
 
     <div id="id-card">
-        <img src="" id="cardLogo" class="logo-img">
+        <img src="" id="cardLogo" class="logo-img"> 
         <div class="profile-img-frame">
             <img src="" id="cardPhoto">
         </div>
         <div id="cardQr" class="qr-area"></div>
         <div class="info">
-            <p id="cardId" style="font-weight: bold; color: #888;"></p>
-            <h3 id="cardNama">NAMA PEGAWAI</h3>
-            <p id="cardJabatan">Jabatan</p>
-            <p id="cardHp">0812xxxx</p>
+            <p id="cardId" style="font-weight: bold; color: #888; font-size: 10px;"></p>
+            <h3 id="cardNama" style="text-transform: uppercase;"></h3>
+            <p id="cardJabatan"></p>
+            <p id="cardHp"></p>
             <p style="margin-top: 10px; color: #27ae60; font-weight: bold; font-size: 10px;">PEGAWAI SAH YMAP</p>
         </div>
     </div>
     <button id="btnDownload" style="display:none; width: 320px; margin-top: 10px;" onclick="downloadPDF()">Download PDF (ATM Size)</button>
 
     <div class="emp-list" id="empListArea">
-        <h3>Daftar Pegawai</h3>
+        <h3 style="text-align: center;">Daftar Pegawai</h3>
         </div>
 
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbxBhq7Lsstx_R67O8GSJsAY7r9jz4GxHHNT9Pqrjp9qcq80jlB3msC8MRUhZhElJXOQSg/exec"; // <--- ISI INI
+        // TEMPEL URL DEPLOY GAS KAMU DI SINI
+        const API_URL = "https://script.google.com/macros/s/AKfycbzfD3xfWwjUFkxmf5lXaIvN0zUei3YfA6FdwtI9rk1hn1G7-zYYU3FaaPJKQ_lAyr3twQ/exec"; 
+        let globalData = [];
 
-        // Fungsi Ambil Data
-        async function fetchPegawai() {
-            const res = await fetch(API_URL);
-            const data = await res.json();
-            const container = document.getElementById('empListArea');
-            container.innerHTML = '<h3>Daftar Pegawai</h3>';
-            
-            data.forEach(emp => {
-                container.innerHTML += `
-                    <div class="emp-card">
-                        <div>
-                            <b>${emp.nama}</b><br><small>${emp.jabatan}</small>
-                        </div>
-                        <div>
-                            <button onclick="lihatCard('${emp.fileId}')" style="padding: 5px 10px; width: auto;">Card</button>
-                            <button onclick="window.open('https://drive.google.com/uc?id=${emp.id_ktp_file}')" style="padding: 5px 10px; width: auto;">KTP</button>
-                        </div>
-                    </div>
-                `;
-            });
+        function tampilNotif(pesan) {
+            document.getElementById('notifText').innerText = pesan;
+            document.getElementById('notifBox').style.display = 'flex';
         }
 
-        // Fungsi Simpan (Konversi ke Base64 dulu)
+        async function fetchPegawai() {
+            try {
+                const res = await fetch(API_URL);
+                globalData = await res.json();
+                const container = document.getElementById('empListArea');
+                container.innerHTML = '<h3 style="text-align: center;">Daftar Pegawai</h3>';
+                
+                globalData.forEach(emp => {
+                    container.innerHTML += `
+                        <div class="emp-card">
+                            <div><b>${emp.nama}</b><br><small>${emp.jabatan}</small></div>
+                            <div>
+                                <button onclick="lihatCard('${emp.fileId}')" style="padding: 5px 10px; width: auto;">Card</button>
+                                <button onclick="window.open('https://drive.google.com/uc?id=${emp.id_ktp_file}')" style="padding: 5px 10px; width: auto;">KTP</button>
+                            </div>
+                        </div>`;
+                });
+            } catch(e) { tampilNotif("Gagal memuat daftar pegawai."); }
+        }
+
         async function simpanData() {
             const btn = document.getElementById('btnSubmit');
-            btn.innerText = "Sabar, lagi diproses..."; btn.disabled = true;
+            const fotoFile = document.getElementById('foto').files[0];
+            const ktpFile = document.getElementById('ktp').files[0];
 
-            const toBase64 = file => new Promise((resolve, reject) => {
+            if(!fotoFile || !ktpFile || !document.getElementById('nama').value) {
+                return tampilNotif("Lengkapi semua data & foto!");
+            }
+
+            btn.innerText = "Diproses..."; btn.disabled = true;
+
+            const toBase64 = file => new Promise((resolve) => {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
                 reader.onload = () => resolve(reader.result.split(',')[1]);
             });
-
-            const fotoFile = document.getElementById('foto').files[0];
-            const ktpFile = document.getElementById('ktp').files[0];
 
             const payload = {
                 formData: {
                     nama: document.getElementById('nama').value,
                     jabatan: document.getElementById('jabatan').value,
                     no_hp: document.getElementById('no_hp').value,
-                    alamat: document.getElementById('alamat').value,
-                    tgl_daftar: new Date().toLocaleDateString()
+                    alamat: document.getElementById('alamat').value
                 },
                 photo: { blob: await toBase64(fotoFile), mimeType: fotoFile.type },
                 ktp: { blob: await toBase64(ktpFile), mimeType: ktpFile.type }
             };
 
-            await fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) });
-            alert("Berhasil!");
-            location.reload();
+            try {
+                await fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) });
+                tampilNotif("Pegawai berhasil didaftarkan!");
+                document.getElementById('ymapForm').reset();
+                fetchPegawai();
+            } catch(e) { tampilNotif("Terjadi kesalahan."); }
+            
+            btn.innerText = "Daftarkan Pegawai"; btn.disabled = false;
         }
 
         function lihatCard(id) {
-            // Logika untuk menampilkan data ke #id-card
-            // Sertakan generator QR Code disini
+            const emp = globalData.find(e => e.fileId === id);
+            if(!emp) return;
+
+            document.getElementById('cardNama').innerText = emp.nama;
+            document.getElementById('cardJabatan').innerText = emp.jabatan;
+            document.getElementById('cardHp').innerText = emp.no_hp;
+            document.getElementById('cardId').innerText = "ID: " + emp.fileId.substring(0, 8).toUpperCase();
+            
+            const photoEl = document.getElementById('cardPhoto');
+            photoEl.style.display = 'block';
+            photoEl.src = emp.photoUrl;
+
+            document.getElementById('cardQr').innerHTML = "";
+            new QRCode(document.getElementById('cardQr'), {
+                text: `YMAP - ${emp.nama} - ${emp.jabatan}`, width: 60, height: 60
+            });
+
             document.getElementById('id-card').style.display = 'flex';
             document.getElementById('btnDownload').style.display = 'block';
-            // (Tambahkan logika mapping data ke element preview)
+            document.getElementById('id-card').scrollIntoView({ behavior: 'smooth' });
         }
 
         async function downloadPDF() {
+            tampilNotif("Menyiapkan PDF...");
             const card = document.getElementById('id-card');
-            const canvas = await html2canvas(card);
+            const canvas = await html2canvas(card, { scale: 3, useCORS: true });
             const imgData = canvas.toDataURL('image/png');
             const { jsPDF } = window.jspdf;
-            const pdf = new jsPDF('p', 'mm', [85.6, 54]); // Ukuran Standar ATM
+            
+            const pdf = new jsPDF('p', 'mm', [85.6, 54]); 
             pdf.addImage(imgData, 'PNG', 0, 0, 54, 85.6);
-            pdf.save("ID_CARD_YMAP.pdf");
+            pdf.save(`ID_CARD_${document.getElementById('cardNama').innerText}.pdf`);
         }
 
         window.onload = fetchPegawai;
