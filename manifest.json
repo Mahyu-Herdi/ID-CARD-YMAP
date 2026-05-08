@@ -1,0 +1,21 @@
+{
+  "name": "Yayasan Muslim Aceh Peduli ID",
+  "short_name": "YMAP ID",
+  "description": "Sistem Manajemen ID Card YMAP",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#EAE6DF",
+  "theme_color": "#EAE6DF",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
