@@ -12,7 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -32,12 +32,13 @@
             display: flex; flex-direction: column; align-items: center; 
         }
 
+        /* --- CLAYMORPHISM DITINGKATKAN --- */
         .glass-panel { 
             background: var(--bg); border-radius: 35px; padding: 25px; 
             width: 92%; max-width: 400px; box-sizing: border-box;
             box-shadow: 20px 20px 60px var(--shadow), -20px -20px 60px var(--white), 
-                        inset 2px 2px 5px rgba(255,255,255,0.7); 
-            border: 1px solid rgba(255,255,255,0.4);
+                        inset 4px 4px 10px rgba(255,255,255,0.9); /* Inset dipertebal biar empuk */
+            border: 1px solid rgba(255,255,255,0.5);
             margin-bottom: 30px; 
         }
 
@@ -50,63 +51,75 @@
         }
         input:focus { box-shadow: inset 10px 10px 20px var(--shadow), inset -10px -10px 20px var(--white); }
 
-        /* Style dasar tombol */
         button { 
             width: 100%; padding: 18px; margin: 15px 0 5px 0; border: none; border-radius: 22px; 
             background: var(--bg); color: var(--text); font-family: inherit; font-weight: 600; font-size: 1rem;
             cursor: pointer; transition: all 0.2s ease; 
-            box-shadow: 10px 10px 20px var(--shadow), -10px -10px 20px var(--white), 
-                        inset 3px 3px 6px rgba(255,255,255,0.8), inset -3px -3px 6px rgba(0,0,0,0.05); 
-            border: 1px solid rgba(255,255,255,0.3);
+            box-shadow: 12px 12px 24px var(--shadow), -12px -12px 24px var(--white), 
+                        inset 4px 4px 8px rgba(255,255,255,0.9), inset -4px -4px 8px rgba(0,0,0,0.05); /* Clay lebih terasa */
+            border: 1px solid rgba(255,255,255,0.4);
         }
-        button:hover { transform: translateY(-3px); box-shadow: 12px 12px 24px var(--shadow), -12px -12px 24px var(--white), inset 3px 3px 6px rgba(255,255,255,0.8); }
+        button:hover { transform: translateY(-3px); box-shadow: 14px 14px 28px var(--shadow), -14px -14px 28px var(--white), inset 4px 4px 8px rgba(255,255,255,0.9); }
         button:active { transform: translateY(2px); box-shadow: inset 8px 8px 16px var(--shadow), inset -8px -8px 16px var(--white); border: none; }
         button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: inset 6px 6px 12px var(--shadow), inset -6px -6px 12px var(--white); }
 
+        /* --- ID CARD LAYOUT CENTER PRESISI --- */
         #id-card { 
             width: 320px; height: 500px; background: var(--card-bg); border-radius: 25px; 
             box-shadow: 20px 20px 50px var(--shadow), -20px -20px 50px var(--white),
-                        inset 3px 3px 10px rgba(255,255,255,0.9); 
-            border: 2px solid rgba(255,255,255,0.6);
-            position: relative; display: none; flex-direction: column; align-items: center; 
-            padding: 20px; box-sizing: border-box; margin: 0 auto; 
+                        inset 4px 4px 15px rgba(255,255,255,1); /* Makin empuk */
+            border: 2px solid rgba(255,255,255,0.7);
+            position: relative; display: none; 
+            flex-direction: column; align-items: center; justify-content: center; /* Bikin konten presisi di tengah */
+            padding: 20px; padding-top: 40px; box-sizing: border-box; margin: 0 auto; 
             overflow: hidden; 
             z-index: 1;
         }
 
+        /* Seni Gelombang Dipertebal Warnanya */
         .shape-red {
-            position: absolute; top: -70px; right: -70px; width: 250px; height: 250px;
+            position: absolute; top: -60px; right: -60px; width: 260px; height: 260px;
             background: var(--ymap-red); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
-            opacity: 0.12; z-index: -1; filter: blur(18px);
+            opacity: 0.35; /* Ditebalin dari 0.12 */
+            z-index: -1; filter: blur(25px); /* Biar tetep nyatu sama BG */
         }
         .shape-blue {
-            position: absolute; bottom: -80px; left: -80px; width: 250px; height: 250px;
+            position: absolute; bottom: -70px; left: -70px; width: 260px; height: 260px;
             background: var(--ymap-blue); border-radius: 60% 40% 30% 70% / 50% 40% 50% 60%;
-            opacity: 0.12; z-index: -1; filter: blur(18px);
+            opacity: 0.35; /* Ditebalin dari 0.12 */
+            z-index: -1; filter: blur(25px);
         }
 
         img[src=""] { display: none; }
-        .logo-img { position: absolute; top: 25px; left: 30px; width: 90px; object-fit: contain; z-index: 2; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1)); }
         
+        /* Posisi Logo di Card */
+        .logo-img { position: absolute; top: 20px; left: 20px; width: 85px; object-fit: contain; z-index: 2; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.15)); }
+        
+        /* Frame Foto */
         .profile-img-frame { 
-            width: 135px; height: 165px; margin-top: 85px; border-radius: 22px; 
+            width: 140px; height: 170px; margin-bottom: 15px; border-radius: 22px; 
             background: var(--card-bg); z-index: 2;
-            box-shadow: 12px 12px 24px var(--card-shadow), -12px -12px 24px var(--white), inset 2px 2px 5px rgba(255,255,255,0.6); 
+            box-shadow: 12px 12px 24px var(--card-shadow), -12px -12px 24px var(--white), inset 3px 3px 8px rgba(255,255,255,0.8); 
             overflow: hidden; display: flex; justify-content: center; align-items: center; 
-            border: 3px solid rgba(255,255,255,0.8);
+            border: 4px solid rgba(255,255,255,0.9); /* Bingkai foto lebih tebal */
         }
         .profile-img-frame img { width: 100%; height: 100%; object-fit: cover; }
         
+        /* Area QR */
         .qr-area { 
-            width: 65px; height: 65px; margin: 20px 0 15px 0; padding: 5px; 
+            width: 70px; height: 70px; margin: 0 0 15px 0; padding: 5px; 
             background: white; border-radius: 12px; z-index: 2;
             box-shadow: 6px 6px 12px var(--card-shadow), -6px -6px 12px var(--white); 
         }
         
-        .info { text-align: center; z-index: 2; }
-        .info h3 { margin: 5px 0; font-size: 1.25rem; color: #2d3436; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;}
-        .info p { margin: 2px 0; font-size: 0.9rem; color: #555; font-weight: 600; }
+        /* Info Teks */
+        .info { text-align: center; z-index: 2; display: flex; flex-direction: column; gap: 4px;}
+        .info h3 { margin: 0; font-size: 1.25rem; color: #2d3436; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;}
+        .info p { margin: 0; font-size: 0.9rem; color: #555; font-weight: 600; }
+        .info .id-text { font-weight: bold; color: #888; font-size: 10px; margin-bottom: 2px;}
+        .info .alamat-text { font-size: 0.8rem; font-weight: 500; color: #666; max-width: 260px; line-height: 1.2; margin-top: 5px;}
 
+        /* --- SISA STYLE SAMA --- */
         .emp-list { width: 92%; max-width: 400px; box-sizing: border-box;}
         .emp-card { 
             background: var(--bg); padding: 22px; margin: 20px 0; border-radius: 25px; 
@@ -127,25 +140,11 @@
 
         #card-action-btns { display: none; width: 92%; max-width: 320px; margin-top: 15px; flex-direction: column; gap: 10px; }
 
-        /* Header Logo Lebih Rapi & Presisi */
         .app-header { display: flex; flex-direction: column; align-items: center; margin-bottom: 30px; width: 100%; text-align: center; }
-        .app-header img { 
-            width: 140px; /* Ukuran pas, tidak kekecilan/kebesaran */
-            object-fit: contain; 
-            margin-bottom: 12px; 
-            filter: drop-shadow(3px 3px 6px rgba(0,0,0,0.1)); 
-        }
-        .app-header h2 { 
-            margin: 0; color: #2d3436; font-size: 1.25rem; 
-            letter-spacing: 0.5px; font-weight: 700; line-height: 1.4;
-        }
+        .app-header img { width: 140px; object-fit: contain; margin-bottom: 12px; filter: drop-shadow(3px 3px 6px rgba(0,0,0,0.1)); }
+        .app-header h2 { margin: 0; color: #2d3436; font-size: 1.25rem; letter-spacing: 0.5px; font-weight: 700; line-height: 1.4; }
 
-        /* Tombol Tambah Pegawai Dikecilin */
-        .btn-tambah {
-            width: auto; min-width: 200px; padding: 14px 28px; 
-            background: #2980b9; color: white; margin-bottom: 25px; 
-            font-size: 0.95rem; border-radius: 20px;
-        }
+        .btn-tambah { width: auto; min-width: 200px; padding: 14px 28px; background: #2980b9; color: white; margin-bottom: 25px; font-size: 0.95rem; border-radius: 20px; }
     </style>
 </head>
 <body>
@@ -168,8 +167,7 @@
     </div>
 
     <div id="verifyOverlay" class="custom-notif">
-        <div class="notif-box" id="verifyContent">
-            </div>
+        <div class="notif-box" id="verifyContent"></div>
     </div>
 
     <div class="app-header" id="appHeader">
@@ -199,17 +197,18 @@
     <div id="id-card">
         <div class="shape-red"></div>
         <div class="shape-blue"></div>
-
         <img src="logo.png" id="cardLogo" class="logo-img" onerror="this.style.display='none'"> 
+        
         <div class="profile-img-frame">
             <img src="" id="cardPhoto">
         </div>
         <div id="cardQr" class="qr-area"></div>
         <div class="info">
-            <p id="cardId" style="font-weight: bold; color: #888; font-size: 10px;"></p>
+            <p id="cardId" class="id-text"></p>
             <h3 id="cardNama"></h3>
             <p id="cardJabatan"></p>
             <p id="cardHp"></p>
+            <p id="cardAlamat" class="alamat-text"></p>
         </div>
     </div>
     
@@ -230,7 +229,6 @@
             });
         }
 
-        // Link API kamu sudah otomatis terpasang
         const API_URL = "https://script.google.com/macros/s/AKfycbwXt9J06AExtcpj9eYd43YrBfIVMMxz3qYXrdJ9hXFNpOEtVOkKnHJl5AA2pcYJ0rmPBw/exec"; 
         
         let globalData = [];
@@ -269,7 +267,6 @@
                 const verifyId = urlParams.get('verify'); 
 
                 if(verifyId) {
-                    // Sembunyikan elemen utama kalau sedang di mode scan QR
                     document.getElementById('appHeader').style.display = 'none';
                     document.getElementById('adminPanel').style.display = 'none';
                     document.getElementById('btnBukaForm').style.display = 'none';
@@ -426,6 +423,7 @@
             document.getElementById('cardNama').innerText = emp.nama;
             document.getElementById('cardJabatan').innerText = emp.jabatan;
             document.getElementById('cardHp').innerText = emp.no_hp;
+            document.getElementById('cardAlamat').innerText = emp.alamat; // Alamat masuk sini
             document.getElementById('cardId').innerText = "ID: " + emp.fileId.substring(0, 8).toUpperCase();
             document.getElementById('cardLogo').style.display = 'block';
 
@@ -433,7 +431,6 @@
             photoEl.style.display = 'block';
             photoEl.src = emp.photoUrl; 
 
-            // QR CODE DIUBAH KE PARAMETER ?verify=
             const urlUtama = window.location.href.split('?')[0]; 
             const linkVerifikasi = `${urlUtama}?verify=${emp.fileId}`;
             document.getElementById('cardQr').innerHTML = "";
@@ -446,7 +443,7 @@
 
             if(!window.location.search.includes('verify=')) {
                 btnContainer.style.display = 'flex';
-                btnDl.innerText = "Memuat Kualitas HD...";
+                btnDl.innerText = "Memuat Kualitas HD... Sabar Ya";
                 btnDl.disabled = true;
                 btnDl.style.background = "#95a5a6";
             }
