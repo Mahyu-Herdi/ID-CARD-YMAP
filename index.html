@@ -94,16 +94,18 @@
         }
         .app-header:active { opacity: 0.7; }
         
-        .app-header img { 
-            width: 100px; 
+           .app-header img { 
+            width: 350px; /* <-- Digeudein dari 300px. Kalau masih kurang, naikin lagi angkanya */
             height: auto;
             object-fit: contain; margin-bottom: 0; margin-right: 15px; 
             filter: drop-shadow(3px 3px 6px rgba(0,0,0,0.15)); 
         }
         .app-header h2 { 
-            margin: 0; color: var(--ymap-blue-dark); font-size: 1.3rem; 
-            letter-spacing: 0.5px; font-weight: 700; line-height: 1.3; 
+            margin: 0; color: var(--ymap-blue-dark); 
+            font-size: 1.1rem; /* <-- Dikecilin dari 1.3rem. Kalau mau lebih kecil lagi, coba 1rem */
+            letter-spacing: 0.5px; font-weight: 500; line-height: 1.3; 
         }
+
         
         .drawer-wrapper { 
             width: 100%; display: flex; justify-content: center; 
