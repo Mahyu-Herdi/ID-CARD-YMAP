@@ -51,7 +51,6 @@
             position: relative; display: none; flex-direction: column; align-items: center; padding: 20px;
         }
 
-        /* Biar icon broken gak muncul pas awal */
         img[src=""] { display: none; }
 
         .logo-img { position: absolute; top: 20px; left: 20px; width: 60px; }
@@ -80,7 +79,6 @@
             display: flex; justify-content: space-between; align-items: center;
         }
 
-        /* Custom Notif */
         .custom-notif {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
             background: var(--bg); padding: 30px; border-radius: 25px;
@@ -113,7 +111,7 @@
     </div>
 
     <div id="id-card">
-        <img src="" id="cardLogo" class="logo-img"> 
+        <img src="logo.png" id="cardLogo" class="logo-img" onerror="this.style.display='none'"> 
         <div class="profile-img-frame">
             <img src="" id="cardPhoto">
         </div>
@@ -133,9 +131,9 @@
         </div>
 
     <script>
-        // TEMPEL URL DEPLOY GAS KAMU DI SINI
-        const API_URL = "https://script.google.com/macros/s/AKfycbzfD3xfWwjUFkxmf5lXaIvN0zUei3YfA6FdwtI9rk1hn1G7-zYYU3FaaPJKQ_lAyr3twQ/exec"; 
+        const API_URL = "https://script.google.com/macros/s/AKfycbywJh2G_hphBVqCPbXhiHNB_E8EutOddDK4yL9Xdo3KAkTbJx9Dd0N9ZNwrbzp__DzeXw/exec"; 
         let globalData = [];
+        let editModeId = null; 
 
         function tampilNotif(pesan) {
             document.getElementById('notifText').innerText = pesan;
@@ -153,13 +151,42 @@
                     container.innerHTML += `
                         <div class="emp-card">
                             <div><b>${emp.nama}</b><br><small>${emp.jabatan}</small></div>
-                            <div>
-                                <button onclick="lihatCard('${emp.fileId}')" style="padding: 5px 10px; width: auto;">Card</button>
-                                <button onclick="window.open('https://drive.google.com/uc?id=${emp.id_ktp_file}')" style="padding: 5px 10px; width: auto;">KTP</button>
+                            <div style="display:flex; gap:5px; flex-wrap:wrap; justify-content:flex-end; width:150px;">
+                                <button onclick="lihatCard('${emp.fileId}')" style="padding: 5px; font-size:10px; width:45%;">Card</button>
+                                <button onclick="window.open('https://drive.google.com/uc?id=${emp.id_ktp_file}')" style="padding: 5px; font-size:10px; width:45%;">KTP</button>
+                                <button onclick="siapkanEdit('${emp.fileId}')" style="padding: 5px; font-size:10px; width:45%; background:#f1c40f;">Edit</button>
+                                <button onclick="hapusPegawai('${emp.fileId}')" style="padding: 5px; font-size:10px; width:45%; background:#e74c3c; color:white;">Hapus</button>
                             </div>
                         </div>`;
                 });
             } catch(e) { tampilNotif("Gagal memuat daftar pegawai."); }
+        }
+
+        function siapkanEdit(id) {
+            const emp = globalData.find(e => e.fileId === id);
+            if(!emp) return;
+
+            document.getElementById('nama').value = emp.nama;
+            document.getElementById('jabatan').value = emp.jabatan;
+            document.getElementById('no_hp').value = emp.no_hp;
+            document.getElementById('alamat').value = emp.alamat;
+            
+            editModeId = id; 
+            document.getElementById('btnSubmit').innerText = "Update Data Pegawai";
+            document.getElementById('foto').required = false; 
+            document.getElementById('ktp').required = false;
+
+            window.scrollTo({ top: 0, behavior: 'smooth' }); 
+        }
+
+        async function hapusPegawai(id) {
+            if(!confirm("Yakin mau hapus data pegawai ini?")) return;
+            tampilNotif("Menghapus data...");
+            try {
+                await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: "delete", fileId: id }) });
+                tampilNotif("Data terhapus!");
+                fetchPegawai(); 
+            } catch(e) { tampilNotif("Gagal menghapus data."); }
         }
 
         async function simpanData() {
@@ -167,37 +194,52 @@
             const fotoFile = document.getElementById('foto').files[0];
             const ktpFile = document.getElementById('ktp').files[0];
 
-            if(!fotoFile || !ktpFile || !document.getElementById('nama').value) {
-                return tampilNotif("Lengkapi semua data & foto!");
+            if(!editModeId && (!fotoFile || !ktpFile || !document.getElementById('nama').value)) {
+                return tampilNotif("Lengkapi semua data & foto untuk pegawai baru!");
             }
 
             btn.innerText = "Diproses..."; btn.disabled = true;
 
             const toBase64 = file => new Promise((resolve) => {
+                if(!file) return resolve(null);
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
                 reader.onload = () => resolve(reader.result.split(',')[1]);
             });
 
-            const payload = {
+            let payload = {
+                action: editModeId ? "edit" : "add",
+                fileId: editModeId, 
                 formData: {
                     nama: document.getElementById('nama').value,
                     jabatan: document.getElementById('jabatan').value,
                     no_hp: document.getElementById('no_hp').value,
                     alamat: document.getElementById('alamat').value
-                },
-                photo: { blob: await toBase64(fotoFile), mimeType: fotoFile.type },
-                ktp: { blob: await toBase64(ktpFile), mimeType: ktpFile.type }
+                }
             };
+
+            if(!editModeId) {
+                payload.photo = { blob: await toBase64(fotoFile), mimeType: fotoFile.type };
+                payload.ktp = { blob: await toBase64(ktpFile), mimeType: ktpFile.type };
+            } else {
+                const empLama = globalData.find(e => e.fileId === editModeId);
+                payload.formData.id_ktp_file = empLama.id_ktp_file; 
+            }
 
             try {
                 await fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) });
-                tampilNotif("Pegawai berhasil didaftarkan!");
+                tampilNotif(editModeId ? "Data diupdate!" : "Pegawai baru didaftarkan!");
+                
                 document.getElementById('ymapForm').reset();
-                fetchPegawai();
-            } catch(e) { tampilNotif("Terjadi kesalahan."); }
+                editModeId = null;
+                document.getElementById('btnSubmit').innerText = "Daftarkan Pegawai";
+                document.getElementById('foto').required = true; 
+                document.getElementById('ktp').required = true;
+                
+                fetchPegawai(); 
+            } catch(e) { tampilNotif("Terjadi kesalahan."); btn.disabled = false; }
             
-            btn.innerText = "Daftarkan Pegawai"; btn.disabled = false;
+            btn.disabled = false;
         }
 
         function lihatCard(id) {
@@ -209,6 +251,8 @@
             document.getElementById('cardHp').innerText = emp.no_hp;
             document.getElementById('cardId').innerText = "ID: " + emp.fileId.substring(0, 8).toUpperCase();
             
+            document.getElementById('cardLogo').style.display = 'block';
+
             const photoEl = document.getElementById('cardPhoto');
             photoEl.style.display = 'block';
             photoEl.src = emp.photoUrl;
@@ -233,6 +277,7 @@
             const pdf = new jsPDF('p', 'mm', [85.6, 54]); 
             pdf.addImage(imgData, 'PNG', 0, 0, 54, 85.6);
             pdf.save(`ID_CARD_${document.getElementById('cardNama').innerText}.pdf`);
+            tampilNotif("PDF Berhasil Diunduh!");
         }
 
         window.onload = fetchPegawai;
