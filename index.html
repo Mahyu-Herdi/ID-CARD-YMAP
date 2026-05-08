@@ -126,8 +126,8 @@
             background: var(--card-bg); border-radius: 25px; 
             box-shadow: 15px 15px 30px var(--shadow), -15px -15px 30px var(--white);
             position: relative; display: none; 
-            flex-direction: column; align-items: center; justify-content: center; /* FIX ISI KETARIK: Sekarang Center Murni */
-            padding: 20px; padding-top: 55px; /* Padding dikurangi biar seimbang */
+            flex-direction: column; align-items: center; justify-content: center; 
+            padding: 20px; padding-top: 55px; 
             box-sizing: border-box; margin: 0 auto; 
             overflow: hidden; 
             z-index: 1;
@@ -142,7 +142,6 @@
             z-index: 3;
         }
 
-        /* FIX PDF BLUR KEPOTONG: Kotak diperbesar (450px) agar fading selesai di dalam area, html2canvas gak bakal motong lagi */
         .shape-red {
             position: absolute; top: -150px; right: -150px; width: 450px; height: 450px;
             background: radial-gradient(circle, rgba(234,67,73,0.35) 0%, rgba(234,67,73,0) 65%);
@@ -158,7 +157,7 @@
         .logo-img { position: absolute; top: 22px; left: 22px; width: 85px; object-fit: contain; z-index: 2; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.15)); }
         
         .profile-img-frame { 
-            width: 135px; height: 165px; margin: 0 0 12px 0; border-radius: 22px; 
+            width: 135px; height: 165px; margin: 0 0 15px 0; border-radius: 22px; 
             background: var(--card-bg); z-index: 2;
             box-shadow: 8px 8px 16px var(--card-shadow), -8px -8px 16px var(--white), inset 3px 3px 8px rgba(255,255,255,0.8); 
             overflow: hidden; display: flex; justify-content: center; align-items: center; 
@@ -166,10 +165,12 @@
         }
         .profile-img-frame img { width: 100%; height: 100%; object-fit: cover; }
         
+        /* FIX TOTAL QR AREA: Pakai flex center biar QR otomatis presisi di tengah box */
         .qr-area { 
-            width: 70px; height: 70px; margin: 0 0 12px 0; padding: 6px; 
+            width: 80px; height: 80px; margin: 0 0 15px 0; 
             background: white; border-radius: 12px; z-index: 2;
             box-shadow: 4px 4px 10px var(--card-shadow), -4px -4px 10px var(--white); 
+            display: flex; justify-content: center; align-items: center; /* Kunci presisinya di sini */
         }
         
         .info { text-align: center; z-index: 2; display: flex; flex-direction: column; }
@@ -560,10 +561,11 @@
             const linkVerifikasi = `${urlUtama}?verify=${emp.fileId}`;
             document.getElementById('cardQr').innerHTML = "";
             
+            /* FIX UKURAN QR CODE: 66px supaya pas di tengah kotak 80px */
             new QRCode(document.getElementById('cardQr'), { 
                 text: linkVerifikasi, 
-                width: 75, 
-                height: 75,
+                width: 66, 
+                height: 66,
                 correctLevel : QRCode.CorrectLevel.H 
             });
 
@@ -603,7 +605,6 @@
             areaDaftar.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
-        // --- PDF HD FIX ---
         async function downloadPDF() {
             tampilNotif("Menyiapkan PDF Kualitas HD...");
             const card = document.getElementById('id-card');
