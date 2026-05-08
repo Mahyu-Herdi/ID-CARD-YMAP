@@ -24,12 +24,15 @@
         :root {
             --bg: #EAE6DF; 
             --white: #ffffff; 
-            --shadow: #cfcbc4; /* Shadow dilembutin biar puffy */
+            --shadow: #cfcbc4; 
             --text: #504e4a;
             --card-bg: #F2EFE8; 
             --card-shadow: #d1cdc6;
+            
+            /* Warna solid dari Logo YMAP */
             --ymap-red: #EA4349;
             --ymap-blue: #267CA5;
+            --ymap-blue-dark: #1b5b7a;
         }
 
         body { 
@@ -38,14 +41,14 @@
             display: flex; flex-direction: column; align-items: center; 
         }
 
-        /* --- CLAYMORPHISM PUFFY (EMPUK & NYAMAN DI MATA) --- */
+        /* --- CLAYMORPHISM EMPUK --- */
         .glass-panel { 
-            background: var(--bg); border-radius: 35px; padding: 25px; 
+            background: var(--bg); border-radius: 35px; padding: 30px 25px; 
             width: 92%; max-width: 400px; box-sizing: border-box;
             box-shadow: 12px 12px 24px var(--shadow), -12px -12px 24px var(--white), 
-                        inset 2px 2px 6px rgba(255,255,255,0.6); 
+                        inset 3px 3px 8px rgba(255,255,255,0.8); 
             border: 1px solid rgba(255,255,255,0.4);
-            margin-bottom: 30px; 
+            margin-bottom: 30px; display: flex; flex-direction: column; align-items: center;
         }
 
         input, select { 
@@ -55,41 +58,48 @@
             box-sizing: border-box; font-family: inherit; outline: none; color: var(--text); 
             transition: all 0.3s;
         }
-        input:focus { box-shadow: inset 8px 8px 16px var(--shadow), inset -8px -8px 16px var(--white); }
+        input:focus { box-shadow: inset 8px 8px 16px var(--shadow), inset -8px -8px 16px var(--white); border: 1px solid var(--ymap-blue); }
 
-        /* Tombol Default Neumorphism Empuk */
+        /* Tombol Utama (Warna Logo) Claymorphism */
         button { 
             width: 100%; padding: 16px; margin: 15px 0 5px 0; border: none; border-radius: 22px; 
-            background: var(--bg); color: var(--text); font-family: inherit; font-weight: 600; font-size: 0.95rem;
+            font-family: inherit; font-weight: 600; font-size: 0.95rem;
             cursor: pointer; transition: all 0.2s ease; 
-            box-shadow: 8px 8px 16px var(--shadow), -8px -8px 16px var(--white), 
-                        inset 2px 2px 4px rgba(255,255,255,0.8); 
-            border: 1px solid rgba(255,255,255,0.2);
         }
-        button:hover { transform: translateY(-2px); box-shadow: 10px 10px 20px var(--shadow), -10px -10px 20px var(--white), inset 2px 2px 4px rgba(255,255,255,0.8); }
-        button:active { transform: translateY(2px); box-shadow: inset 6px 6px 12px var(--shadow), inset -6px -6px 12px var(--white); border: none; }
-        button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: inset 6px 6px 12px var(--shadow), inset -6px -6px 12px var(--white); }
+        
+        /* Tema Tombol Biru Logo */
+        .btn-blue {
+            background: var(--ymap-blue); color: white;
+            box-shadow: 8px 8px 16px var(--shadow), -8px -8px 16px var(--white), 
+                        inset 3px 3px 8px rgba(255,255,255,0.3), inset -3px -3px 8px rgba(0,0,0,0.1);
+        }
+        .btn-blue:hover { transform: translateY(-2px); background: var(--ymap-blue-dark); box-shadow: 10px 10px 20px var(--shadow), -10px -10px 20px var(--white), inset 3px 3px 8px rgba(255,255,255,0.4); }
+        .btn-blue:active { transform: translateY(2px); box-shadow: inset 6px 6px 12px rgba(0,0,0,0.2); }
 
-        /* Tombol Spesial Download & Tutup (Lebih soft shadows-nya) */
-        .btn-green { background: #2ecc71; color: white; box-shadow: 6px 6px 12px var(--shadow), -6px -6px 12px var(--white); border: none; }
-        .btn-red { background: #e74c3c; color: white; box-shadow: 6px 6px 12px var(--shadow), -6px -6px 12px var(--white); border: none; }
-        .btn-tambah { width: auto; min-width: 200px; padding: 14px 28px; background: #2980b9; color: white; margin-bottom: 25px; border-radius: 20px; box-shadow: 6px 6px 12px var(--shadow), -6px -6px 12px var(--white); border: none;}
+        /* Tema Tombol Merah Logo */
+        .btn-red {
+            background: var(--ymap-red); color: white;
+            box-shadow: 8px 8px 16px var(--shadow), -8px -8px 16px var(--white), 
+                        inset 3px 3px 8px rgba(255,255,255,0.3), inset -3px -3px 8px rgba(0,0,0,0.1);
+        }
+        .btn-red:hover { transform: translateY(-2px); filter: brightness(0.9); box-shadow: 10px 10px 20px var(--shadow), -10px -10px 20px var(--white), inset 3px 3px 8px rgba(255,255,255,0.4); }
+        .btn-red:active { transform: translateY(2px); box-shadow: inset 6px 6px 12px rgba(0,0,0,0.2); }
 
-        /* --- ID CARD LAYOUT (FIX LOGO KETIMPA) --- */
+        /* --- ID CARD PRESISI STANDAR 54x86mm --- */
         #id-card { 
-            width: 320px; height: 500px; background: var(--card-bg); border-radius: 25px; 
+            width: 320px; height: 507px; /* Fix rasio agar pas PDF dan gak gepeng */
+            background: var(--card-bg); border-radius: 25px; 
             box-shadow: 15px 15px 30px var(--shadow), -15px -15px 30px var(--white),
-                        inset 3px 3px 8px rgba(255,255,255,0.9); 
+                        inset 3px 3px 10px rgba(255,255,255,1); 
             border: 2px solid rgba(255,255,255,0.5);
             position: relative; display: none; 
-            flex-direction: column; align-items: center; justify-content: flex-start; /* Dirubah biar foto gak naik */
-            padding: 20px; padding-top: 85px; /* Jarak atas DIBESARIN khusus buat tempat logo */
+            flex-direction: column; align-items: center; justify-content: flex-start;
+            padding: 20px; padding-top: 85px; 
             box-sizing: border-box; margin: 0 auto; 
             overflow: hidden; 
             z-index: 1;
         }
 
-        /* Seni Gelombang (Warna pas, gak terlalu tebal, gak terlalu tipis) */
         .shape-red {
             position: absolute; top: -60px; right: -60px; width: 260px; height: 260px;
             background: var(--ymap-red); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
@@ -102,11 +112,8 @@
         }
 
         img[src=""] { display: none; }
+        .logo-img { position: absolute; top: 20px; left: 20px; width: 85px; object-fit: contain; z-index: 2; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1)); }
         
-        /* Logo aman di pojok atas, gak nyenggol foto */
-        .logo-img { position: absolute; top: 20px; left: 20px; width: 80px; object-fit: contain; z-index: 2; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1)); }
-        
-        /* Frame Foto */
         .profile-img-frame { 
             width: 135px; height: 165px; margin: 0 0 15px 0; border-radius: 22px; 
             background: var(--card-bg); z-index: 2;
@@ -117,18 +124,18 @@
         .profile-img-frame img { width: 100%; height: 100%; object-fit: cover; }
         
         .qr-area { 
-            width: 65px; height: 65px; margin: 0 0 12px 0; padding: 5px; 
+            width: 70px; height: 70px; margin: 0 0 12px 0; padding: 5px; 
             background: white; border-radius: 12px; z-index: 2;
             box-shadow: 4px 4px 10px var(--card-shadow), -4px -4px 10px var(--white); 
         }
         
         .info { text-align: center; z-index: 2; display: flex; flex-direction: column; }
-        .info h3 { margin: 0; font-size: 1.2rem; color: #2d3436; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;}
+        .info h3 { margin: 0; font-size: 1.25rem; color: var(--ymap-blue-dark); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;}
         .info p { margin: 0; font-size: 0.85rem; color: #555; font-weight: 600; line-height: 1.4;}
-        .info .id-text { font-weight: bold; color: #888; font-size: 10px; margin-bottom: 4px; letter-spacing: 1px;}
+        .info .id-text { font-weight: bold; color: var(--ymap-red); font-size: 10px; margin-bottom: 4px; letter-spacing: 1px;}
         .info .alamat-text { font-size: 0.75rem; font-weight: 500; color: #666; max-width: 260px; line-height: 1.2; margin-top: 6px;}
 
-        /* --- SISA STYLE --- */
+        /* --- LAYOUT LIST & DASHBOARD --- */
         .emp-list { width: 92%; max-width: 400px; box-sizing: border-box;}
         .emp-card { 
             background: var(--bg); padding: 22px; margin: 20px 0; border-radius: 25px; 
@@ -136,9 +143,12 @@
             display: flex; flex-direction: column; gap: 15px; border: 1px solid rgba(255,255,255,0.3);
         }
         .emp-info { border-bottom: 2px dashed #d3cec4; padding-bottom: 12px; }
+        .emp-info b { color: var(--ymap-blue-dark); font-size: 1.1rem; }
         .action-group { display: flex; gap: 10px; flex-wrap: wrap; justify-content: space-between; }
-        .action-group button { margin: 0; padding: 12px; width: 47%; font-size: 12px; border-radius: 15px; }
+        .action-group button { margin: 0; padding: 10px; width: 47%; font-size: 12px; border-radius: 15px; background: var(--bg); box-shadow: 4px 4px 8px var(--shadow), -4px -4px 8px var(--white); color: var(--text); border: none;}
+        .action-group button:active { box-shadow: inset 4px 4px 8px var(--shadow), inset -4px -4px 8px var(--white); }
 
+        /* Modal / Notifikasi */
         .custom-notif { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(234, 230, 223, 0.85); backdrop-filter: blur(5px); z-index: 9999; display: none; justify-content: center; align-items: center; }
         .notif-box { background: var(--bg); padding: 35px 25px; border-radius: 30px; box-shadow: 15px 15px 30px var(--shadow), -15px -15px 30px var(--white), inset 2px 2px 5px rgba(255,255,255,0.6); text-align: center; width: 85%; max-width: 300px; border: 1px solid rgba(255,255,255,0.5); }
         .btn-group-notif { display: flex; gap: 10px; margin-top: 20px; }
@@ -149,33 +159,38 @@
 
         #card-action-btns { display: none; width: 92%; max-width: 320px; margin-top: 15px; flex-direction: column; gap: 10px; }
 
-        .app-header { display: flex; flex-direction: column; align-items: center; margin-bottom: 30px; width: 100%; text-align: center; }
+        .app-header { display: flex; flex-direction: column; align-items: center; margin-bottom: 25px; width: 100%; text-align: center; }
         .app-header img { width: 120px; object-fit: contain; margin-bottom: 12px; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1)); }
-        .app-header h2 { margin: 0; color: #2d3436; font-size: 1.2rem; letter-spacing: 0.5px; font-weight: 700; line-height: 1.4; }
+        .app-header h2 { margin: 0; color: var(--ymap-blue-dark); font-size: 1.2rem; letter-spacing: 0.5px; font-weight: 700; line-height: 1.4; }
+
+        #dashboardScreen { display: none; flex-direction: column; align-items: center; width: 100%; }
+        
+        /* Tombol Logout */
+        .btn-logout { background: transparent; border: none; color: var(--ymap-red); font-size: 12px; box-shadow: none; padding: 5px; width: auto; margin-top: 20px; text-decoration: underline; font-weight: 600; }
+        .btn-logout:active { transform: none; box-shadow: none; background: transparent; }
     </style>
 </head>
 <body>
 
     <div id="notifOverlay" class="custom-notif hide-on-verify">
         <div class="notif-box">
-            <p id="notifText" style="font-weight: 600; font-size: 1.1rem;"></p>
-            <button onclick="tutupNotif()">Tutup</button>
+            <p id="notifText" style="font-weight: 600; font-size: 1.1rem; color: var(--ymap-blue-dark);"></p>
+            <button onclick="tutupNotif()" class="btn-blue">Tutup</button>
         </div>
     </div>
 
     <div id="confirmOverlay" class="custom-notif hide-on-verify">
         <div class="notif-box">
-            <p style="font-weight: 600; color: #c0392b; font-size: 1.1rem;">Yakin mau hapus data pegawai ini secara permanen?</p>
+            <p style="font-weight: 600; color: var(--ymap-red); font-size: 1.1rem;">Yakin mau hapus data pegawai ini secara permanen?</p>
             <div class="btn-group-notif">
-                <button onclick="tutupConfirm()" style="color: #504e4a;">Batal</button>
+                <button onclick="tutupConfirm()" style="background:var(--bg); color:var(--text); box-shadow: inset 4px 4px 8px var(--shadow), inset -4px -4px 8px var(--white);">Batal</button>
                 <button onclick="eksekusiHapus()" class="btn-red">Ya, Hapus!</button>
             </div>
         </div>
     </div>
 
     <div id="verifyOverlay" class="custom-notif">
-        <div class="notif-box" id="verifyContent">
-            </div>
+        <div class="notif-box" id="verifyContent"></div>
     </div>
 
     <div class="app-header hide-on-verify" id="appHeader">
@@ -183,54 +198,66 @@
         <h2>YAYASAN MUSLIM<br>ACEH PEDULI</h2>
     </div>
 
-    <button id="btnBukaForm" class="btn-tambah hide-on-verify" onclick="bukaForm()">+ Tambah Pegawai</button>
-
-    <div class="glass-panel hide-on-verify" id="adminPanel" style="display: none;">
-        <h2 id="formTitle" style="text-align: center; margin-bottom: 25px; color: #2d3436;">Registrasi Pegawai</h2>
-        <form id="ymapForm">
-            <input type="text" id="nama" placeholder="Nama Lengkap" required>
-            <input type="text" id="jabatan" placeholder="Jabatan" required>
-            <input type="text" id="no_hp" placeholder="Nomor HP / WA" required>
-            <input type="text" id="alamat" placeholder="Alamat Sesuai KTP" required>
-            <p style="font-size: 12px; margin: 15px 0 5px 10px; opacity: 0.7; font-weight: 600;">Upload Foto Profil:</p>
-            <input type="file" id="foto" accept="image/*" required>
-            <p style="font-size: 12px; margin: 15px 0 5px 10px; opacity: 0.7; font-weight: 600;">Upload Foto KTP:</p>
-            <input type="file" id="ktp" accept="image/*" required>
-            
-            <button type="button" onclick="simpanData()" id="btnSubmit" class="btn-green" style="margin-top: 15px;">Simpan Data</button>
-            <button type="button" onclick="tutupForm()" class="btn-red" style="margin-top: 5px;">Batal</button>
-        </form>
+    <div id="loginScreen" class="glass-panel hide-on-verify" style="margin-top: 10px;">
+        <h2 style="color: var(--ymap-blue-dark); margin-bottom: 20px; text-align: center;">Login Admin</h2>
+        <input type="text" id="loginUsername" placeholder="Username">
+        <input type="password" id="loginPassword" placeholder="Password">
+        <button onclick="prosesLogin()" class="btn-blue" style="margin-top: 25px;">Masuk Aplikasi</button>
     </div>
 
-    <div id="id-card">
-        <div class="shape-red"></div>
-        <div class="shape-blue"></div>
-        <img src="logo.png" id="cardLogo" class="logo-img" onerror="this.style.display='none'"> 
+    <div id="dashboardScreen" class="hide-on-verify">
         
-        <div class="profile-img-frame">
-            <img src="" id="cardPhoto">
-        </div>
-        <div id="cardQr" class="qr-area"></div>
-        <div class="info">
-            <p id="cardId" class="id-text"></p>
-            <h3 id="cardNama"></h3>
-            <p id="cardJabatan"></p>
-            <p id="cardHp"></p>
-            <p id="cardAlamat" class="alamat-text"></p>
-        </div>
-    </div>
-    
-    <div id="card-action-btns" class="hide-on-verify">
-        <button id="btnDownload" class="btn-green" style="margin: 0;" onclick="downloadPDF()">Download ID Card (PDF)</button>
-        <button onclick="tutupCard()" class="btn-red" style="margin: 0;">Tutup Preview Card</button>
-    </div>
+        <button id="btnBukaForm" class="btn-blue" onclick="bukaForm()" style="width: auto; min-width: 200px; padding: 14px 28px; margin-bottom: 25px;">+ Tambah Pegawai</button>
 
-    <div class="emp-list hide-on-verify" id="areaDaftarPegawai">
-        <input type="text" id="inputCari" placeholder="🔍 Cari nama atau jabatan..." onkeyup="cariPegawai()" style="margin-bottom: 20px;">
-        <div id="empListArea"></div>
-    </div>
+        <div class="glass-panel" id="adminPanel" style="display: none;">
+            <h2 id="formTitle" style="text-align: center; margin-bottom: 20px; color: var(--ymap-blue-dark);">Registrasi Pegawai</h2>
+            <form id="ymapForm" style="width: 100%;">
+                <input type="text" id="nama" placeholder="Nama Lengkap" required>
+                <input type="text" id="jabatan" placeholder="Jabatan" required>
+                <input type="text" id="no_hp" placeholder="Nomor HP / WA" required>
+                <input type="text" id="alamat" placeholder="Alamat Sesuai KTP" required>
+                <p style="font-size: 12px; margin: 15px 0 5px 10px; opacity: 0.7; font-weight: 600;">Upload Foto Profil:</p>
+                <input type="file" id="foto" accept="image/*" required>
+                <p style="font-size: 12px; margin: 15px 0 5px 10px; opacity: 0.7; font-weight: 600;">Upload Foto KTP:</p>
+                <input type="file" id="ktp" accept="image/*" required>
+                
+                <button type="button" onclick="simpanData()" id="btnSubmit" class="btn-blue" style="margin-top: 20px;">Simpan Data</button>
+                <button type="button" onclick="tutupForm()" class="btn-red" style="margin-top: 5px;">Batal</button>
+            </form>
+        </div>
 
-    <script>
+        <div id="id-card">
+            <div class="shape-red"></div>
+            <div class="shape-blue"></div>
+            <img src="logo.png" id="cardLogo" class="logo-img" onerror="this.style.display='none'"> 
+            
+            <div class="profile-img-frame">
+                <img src="" id="cardPhoto">
+            </div>
+            <div id="cardQr" class="qr-area"></div>
+            <div class="info">
+                <p id="cardId" class="id-text"></p>
+                <h3 id="cardNama"></h3>
+                <p id="cardJabatan"></p>
+                <p id="cardHp"></p>
+                <p id="cardAlamat" class="alamat-text"></p>
+            </div>
+        </div>
+        
+        <div id="card-action-btns">
+            <button id="btnDownload" class="btn-blue" style="margin: 0;" onclick="downloadPDF()">Download ID Card (PDF)</button>
+            <button onclick="tutupCard()" class="btn-red" style="margin: 0;">Tutup Preview Card</button>
+        </div>
+
+        <div class="emp-list" id="areaDaftarPegawai">
+            <input type="text" id="inputCari" placeholder="🔍 Cari nama atau jabatan..." onkeyup="cariPegawai()" style="margin-bottom: 20px;">
+            <div id="empListArea"></div>
+        </div>
+
+        <button onclick="prosesLogout()" class="btn-logout">Logout Admin</button>
+
+    </div> <script>
+        // Setup PWA
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('sw.js').catch(err => console.log('Gagal Offline', err));
@@ -243,13 +270,49 @@
         let editModeId = null; 
         let hapusModeId = null;
 
+        // FUNGSI UMUM NOTIFIKASI
         function tampilNotif(pesan) { document.getElementById('notifText').innerText = pesan; document.getElementById('notifOverlay').style.display = 'flex'; }
         function tutupNotif() { document.getElementById('notifOverlay').style.display = 'none'; }
         function bukaConfirm(id) { hapusModeId = id; document.getElementById('confirmOverlay').style.display = 'flex'; }
         function tutupConfirm() { hapusModeId = null; document.getElementById('confirmOverlay').style.display = 'none'; }
 
+        // --- SISTEM LOGIN ADMIN ---
+        function cekLogin() {
+            // Kalau lagi mode scan QR, biarkan bypass logic (sudah dihandle fetchPegawai)
+            if(window.location.search.includes('verify=')) return;
+
+            const isLogin = localStorage.getItem('ymap_admin_login');
+            if(isLogin === 'true') {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('dashboardScreen').style.display = 'flex';
+                fetchPegawai(); // Load data cuma kalau udah login
+            } else {
+                document.getElementById('loginScreen').style.display = 'flex';
+                document.getElementById('dashboardScreen').style.display = 'none';
+            }
+        }
+
+        function prosesLogin() {
+            const u = document.getElementById('loginUsername').value;
+            const p = document.getElementById('loginPassword').value;
+            if(u === 'mahyuherdi09' && p === 'M24yu@mhy') {
+                localStorage.setItem('ymap_admin_login', 'true');
+                document.getElementById('loginUsername').value = "";
+                document.getElementById('loginPassword').value = "";
+                cekLogin();
+            } else {
+                tampilNotif("Username atau Password salah!");
+            }
+        }
+
+        function prosesLogout() {
+            localStorage.removeItem('ymap_admin_login');
+            window.location.reload();
+        }
+
+        // --- FUNGSI ADMIN & FORM ---
         function bukaForm() {
-            document.getElementById('adminPanel').style.display = 'block';
+            document.getElementById('adminPanel').style.display = 'flex';
             document.getElementById('btnBukaForm').style.display = 'none';
             document.getElementById('ymapForm').reset();
             editModeId = null;
@@ -284,21 +347,28 @@
                             <h2 style="color:#27ae60; margin-bottom: 5px;">TERVERIFIKASI</h2>
                             <p style="opacity:0.8; font-size:0.9rem; margin-top: 0;">ID Card ini ASLI dan terdaftar resmi di database Yayasan Muslim Aceh Peduli.</p>
                             <hr style="border:none; border-top:2px dashed #cfcbc4; margin:20px 0;">
-                            <h3 style="color:#2d3436; margin:5px 0; font-size: 1.4rem;">${emp.nama.toUpperCase()}</h3>
+                            <h3 style="color:var(--ymap-blue-dark); margin:5px 0; font-size: 1.4rem;">${emp.nama.toUpperCase()}</h3>
                             <p style="margin:0; opacity:0.8; font-weight: 600;">${emp.jabatan}</p>
-                            <p style="margin:5px 0 0 0; opacity:0.6; font-size: 0.8rem;">ID: ${emp.fileId.substring(0, 8).toUpperCase()}</p>
+                            <p style="margin:5px 0 0 0; color:var(--ymap-red); font-weight:bold; font-size: 0.8rem;">ID: ${emp.fileId.substring(0, 8).toUpperCase()}</p>
                         `;
                     } else {
                         document.getElementById('verifyContent').innerHTML = `
                             <div class="verify-icon icon-fail">✗</div>
-                            <h2 style="color:#e74c3c; margin-bottom: 5px;">TIDAK VALID</h2>
+                            <h2 style="color:var(--ymap-red); margin-bottom: 5px;">TIDAK VALID</h2>
                             <p style="opacity:0.8; font-size:0.9rem; margin-top: 0;">Data ID Card tidak ditemukan atau tidak terdaftar di sistem kami.</p>
                         `;
                     }
                     return; 
                 }
-                renderList(globalData);
-            } catch(e) { tampilNotif("Gagal memuat daftar pegawai."); }
+                
+                if(localStorage.getItem('ymap_admin_login') === 'true') {
+                    renderList(globalData);
+                }
+            } catch(e) { 
+                if(localStorage.getItem('ymap_admin_login') === 'true'){
+                    tampilNotif("Gagal memuat daftar pegawai."); 
+                }
+            }
         }
 
         function renderList(dataArray) {
@@ -314,14 +384,14 @@
                 container.innerHTML += `
                     <div class="emp-card">
                         <div class="emp-info">
-                            <b style="font-size: 1.1rem; color: #2d3436;">${emp.nama}</b><br>
-                            <small style="opacity: 0.8;">${emp.jabatan}</small>
+                            <b>${emp.nama}</b><br>
+                            <small style="opacity: 0.8; color: var(--text);">${emp.jabatan}</small>
                         </div>
                         <div class="action-group">
-                            <button onclick="lihatCard('${emp.fileId}')" style="color: #2980b9;">Lihat Card</button>
+                            <button onclick="lihatCard('${emp.fileId}')" style="color: var(--ymap-blue);">Lihat Card</button>
                             <button onclick="window.open('https://drive.google.com/uc?id=${emp.id_ktp_file}')" style="color: #8e44ad;">Lihat KTP</button>
                             <button onclick="siapkanEdit('${emp.fileId}')" style="color: #d35400;">Edit Data</button>
-                            <button onclick="bukaConfirm('${emp.fileId}')" style="color: #c0392b;">Hapus</button>
+                            <button onclick="bukaConfirm('${emp.fileId}')" style="color: var(--ymap-red);">Hapus</button>
                         </div>
                     </div>`;
             });
@@ -340,7 +410,7 @@
             const emp = globalData.find(e => e.fileId === id);
             if(!emp) return;
             
-            document.getElementById('adminPanel').style.display = 'block';
+            document.getElementById('adminPanel').style.display = 'flex';
             document.getElementById('btnBukaForm').style.display = 'none';
             document.getElementById('formTitle').innerText = "Update Data Pegawai";
 
@@ -437,7 +507,7 @@
             const urlUtama = window.location.href.split('?')[0]; 
             const linkVerifikasi = `${urlUtama}?verify=${emp.fileId}`;
             document.getElementById('cardQr').innerHTML = "";
-            new QRCode(document.getElementById('cardQr'), { text: linkVerifikasi, width: 65, height: 65 });
+            new QRCode(document.getElementById('cardQr'), { text: linkVerifikasi, width: 70, height: 70 });
 
             document.getElementById('id-card').style.display = 'flex';
             
@@ -446,7 +516,7 @@
 
             if(!window.location.search.includes('verify=')) {
                 btnContainer.style.display = 'flex';
-                btnDl.innerText = "Memuat Kualitas HD... Sabar Ya";
+                btnDl.innerText = "Memuat Kualitas HD...";
                 btnDl.disabled = true;
                 btnDl.style.background = "#95a5a6";
             }
@@ -464,7 +534,7 @@
             if(!window.location.search.includes('verify=')) {
                 btnDl.innerText = "Download ID Card (PDF)";
                 btnDl.disabled = false;
-                btnDl.style.background = "#2ecc71";
+                btnDl.style.background = "var(--ymap-blue)"; // Balikin warna tombol kalau siap
             }
         }
 
@@ -476,26 +546,32 @@
         }
 
         async function downloadPDF() {
-            tampilNotif("Menyiapkan PDF...");
+            tampilNotif("Menyiapkan PDF Kualitas HD...");
             const card = document.getElementById('id-card');
             
             try {
+                // FIX: Scale dinaikin ke 4 biar bener-bener gak pecah
                 const canvas = await html2canvas(card, { 
-                    scale: 3, 
+                    scale: 4, 
                     useCORS: true, 
                     allowTaint: false,
                     backgroundColor: "#F2EFE8" 
                 });
-                const imgData = canvas.toDataURL('image/png');
+                
+                const imgData = canvas.toDataURL('image/png', 1.0);
                 const { jsPDF } = window.jspdf;
+                
+                // FIX: Memaksa ukuran PDF 54mm x 85.6mm (Standar mutlak ID Card fisik)
                 const pdf = new jsPDF('p', 'mm', [85.6, 54]); 
                 pdf.addImage(imgData, 'PNG', 0, 0, 54, 85.6);
+                
                 pdf.save(`ID_CARD_${document.getElementById('cardNama').innerText}.pdf`);
                 tutupNotif();
             } catch (err) { tampilNotif("Gagal membuat PDF. Coba lagi."); }
         }
 
-        window.onload = fetchPegawai;
+        // Panggil saat web diload
+        window.onload = cekLogin;
     </script>
 </body>
 </html>
