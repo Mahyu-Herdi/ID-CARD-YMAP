@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YMAP Enterprise ID</title>
+    <title>Data Karyawan Yayasan Muslim Aceh Peduli</title>
     
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="logo.png">
@@ -12,7 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -22,7 +22,6 @@
             --text: #504e4a;
             --card-bg: #F2EFE8; 
             --card-shadow: #d1cdc6;
-            /* Warna Logo YMAP */
             --ymap-red: #EA4349;
             --ymap-blue: #267CA5;
         }
@@ -33,7 +32,6 @@
             display: flex; flex-direction: column; align-items: center; 
         }
 
-        /* Claymorphism Panel: Empuk dengan highlight putih di tepi */
         .glass-panel { 
             background: var(--bg); border-radius: 35px; padding: 25px; 
             width: 92%; max-width: 400px; box-sizing: border-box;
@@ -43,7 +41,6 @@
             margin-bottom: 30px; 
         }
 
-        /* Neumorphism Input: Cekungan dalam */
         input, select { 
             width: 100%; padding: 16px; margin: 10px 0; border: none; border-radius: 18px; 
             background: var(--bg); 
@@ -53,7 +50,7 @@
         }
         input:focus { box-shadow: inset 10px 10px 20px var(--shadow), inset -10px -10px 20px var(--white); }
 
-        /* Claymorphism Button: Tebal, empuk, dan nyata */
+        /* Style dasar tombol */
         button { 
             width: 100%; padding: 18px; margin: 15px 0 5px 0; border: none; border-radius: 22px; 
             background: var(--bg); color: var(--text); font-family: inherit; font-weight: 600; font-size: 1rem;
@@ -66,7 +63,6 @@
         button:active { transform: translateY(2px); box-shadow: inset 8px 8px 16px var(--shadow), inset -8px -8px 16px var(--white); border: none; }
         button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: inset 6px 6px 12px var(--shadow), inset -6px -6px 12px var(--white); }
 
-        /* --- ID CARD DESIGN PREMIUM --- */
         #id-card { 
             width: 320px; height: 500px; background: var(--card-bg); border-radius: 25px; 
             box-shadow: 20px 20px 50px var(--shadow), -20px -20px 50px var(--white),
@@ -74,11 +70,10 @@
             border: 2px solid rgba(255,255,255,0.6);
             position: relative; display: none; flex-direction: column; align-items: center; 
             padding: 20px; box-sizing: border-box; margin: 0 auto; 
-            overflow: hidden; /* Penting untuk menahan gelombang di dalam kartu */
+            overflow: hidden; 
             z-index: 1;
         }
 
-        /* Seni Gelombang Neumorphism Merah & Biru */
         .shape-red {
             position: absolute; top: -70px; right: -70px; width: 250px; height: 250px;
             background: var(--ymap-red); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
@@ -111,7 +106,6 @@
         .info { text-align: center; z-index: 2; }
         .info h3 { margin: 5px 0; font-size: 1.25rem; color: #2d3436; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;}
         .info p { margin: 2px 0; font-size: 0.9rem; color: #555; font-weight: 600; }
-        /* --- AKHIR ID CARD --- */
 
         .emp-list { width: 92%; max-width: 400px; box-sizing: border-box;}
         .emp-card { 
@@ -123,23 +117,35 @@
         .action-group { display: flex; gap: 10px; flex-wrap: wrap; justify-content: space-between; }
         .action-group button { margin: 0; padding: 12px; width: 47%; font-size: 12px; border-radius: 15px; }
 
-        /* Popup Umum */
         .custom-notif { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(234, 230, 223, 0.85); backdrop-filter: blur(8px); z-index: 9999; display: none; justify-content: center; align-items: center; }
         .notif-box { background: var(--bg); padding: 35px 25px; border-radius: 35px; box-shadow: 20px 20px 60px var(--shadow), -20px -20px 60px var(--white), inset 2px 2px 5px rgba(255,255,255,0.6); text-align: center; width: 85%; max-width: 320px; border: 1px solid rgba(255,255,255,0.5); }
         .btn-group-notif { display: flex; gap: 10px; margin-top: 20px; }
 
-        /* POPUP VERIFIKASI QR CODE */
-        .verify-icon {
-            width: 80px; height: 80px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 40px; margin: 0 auto 20px auto; color: white;
-            box-shadow: 10px 10px 20px var(--shadow), -10px -10px 20px var(--white), inset 3px 3px 6px rgba(255,255,255,0.5);
-        }
+        .verify-icon { width: 80px; height: 80px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 40px; margin: 0 auto 20px auto; color: white; box-shadow: 10px 10px 20px var(--shadow), -10px -10px 20px var(--white), inset 3px 3px 6px rgba(255,255,255,0.5); }
         .icon-success { background: #27ae60; }
         .icon-fail { background: #e74c3c; }
 
         #card-action-btns { display: none; width: 92%; max-width: 320px; margin-top: 15px; flex-direction: column; gap: 10px; }
 
-        .app-header { display: flex; flex-direction: column; align-items: center; margin-bottom: 25px; width: 100%; }
-        .app-header img { width: 130px; object-fit: contain; margin-bottom: 10px; filter: drop-shadow(3px 3px 6px rgba(0,0,0,0.1)); }
+        /* Header Logo Lebih Rapi & Presisi */
+        .app-header { display: flex; flex-direction: column; align-items: center; margin-bottom: 30px; width: 100%; text-align: center; }
+        .app-header img { 
+            width: 140px; /* Ukuran pas, tidak kekecilan/kebesaran */
+            object-fit: contain; 
+            margin-bottom: 12px; 
+            filter: drop-shadow(3px 3px 6px rgba(0,0,0,0.1)); 
+        }
+        .app-header h2 { 
+            margin: 0; color: #2d3436; font-size: 1.25rem; 
+            letter-spacing: 0.5px; font-weight: 700; line-height: 1.4;
+        }
+
+        /* Tombol Tambah Pegawai Dikecilin */
+        .btn-tambah {
+            width: auto; min-width: 200px; padding: 14px 28px; 
+            background: #2980b9; color: white; margin-bottom: 25px; 
+            font-size: 0.95rem; border-radius: 20px;
+        }
     </style>
 </head>
 <body>
@@ -168,10 +174,10 @@
 
     <div class="app-header" id="appHeader">
         <img src="logo.png" alt="Logo YMAP" onerror="this.style.display='none'">
-        <h2 style="margin: 0; color: #2d3436; font-size: 1.3rem; letter-spacing: 0.5px;">YAYASAN MUSLIM ACEH PEDULI</h2>
+        <h2>YAYASAN MUSLIM<br>ACEH PEDULI</h2>
     </div>
 
-    <button id="btnBukaForm" onclick="bukaForm()" style="width: 92%; max-width: 400px; background: #2980b9; color: white; margin-bottom: 20px;">+ Tambah Pegawai Baru</button>
+    <button id="btnBukaForm" class="btn-tambah" onclick="bukaForm()">+ Tambah Pegawai</button>
 
     <div class="glass-panel" id="adminPanel" style="display: none;">
         <h2 id="formTitle" style="text-align: center; margin-bottom: 25px; color: #2d3436;">Registrasi Pegawai</h2>
@@ -224,7 +230,9 @@
             });
         }
 
-        const API_URL = "---TEMPEL_URL_WEB_APP_GAS_KAMU_DISINI---"; // <--- JANGAN LUPA ISI API KAMU DISINI
+        // Link API kamu sudah otomatis terpasang
+        const API_URL = "https://script.google.com/macros/s/AKfycbwXt9J06AExtcpj9eYd43YrBfIVMMxz3qYXrdJ9hXFNpOEtVOkKnHJl5AA2pcYJ0rmPBw/exec"; 
+        
         let globalData = [];
         let editModeId = null; 
         let hapusModeId = null;
@@ -258,16 +266,15 @@
                 globalData = await res.json();
                 
                 const urlParams = new URLSearchParams(window.location.search);
-                const verifyId = urlParams.get('verify'); // Menggunakan 'verify' untuk logika Popup
+                const verifyId = urlParams.get('verify'); 
 
                 if(verifyId) {
-                    // Sembunyikan elemen utama
+                    // Sembunyikan elemen utama kalau sedang di mode scan QR
                     document.getElementById('appHeader').style.display = 'none';
                     document.getElementById('adminPanel').style.display = 'none';
                     document.getElementById('btnBukaForm').style.display = 'none';
                     document.getElementById('areaDaftarPegawai').style.display = 'none';
                     
-                    // Cek di database
                     const emp = globalData.find(e => e.fileId === verifyId);
                     document.getElementById('verifyOverlay').style.display = 'flex';
                     
@@ -439,7 +446,7 @@
 
             if(!window.location.search.includes('verify=')) {
                 btnContainer.style.display = 'flex';
-                btnDl.innerText = "Memuat Kualitas HD... Sabar Ya";
+                btnDl.innerText = "Memuat Kualitas HD...";
                 btnDl.disabled = true;
                 btnDl.style.background = "#95a5a6";
             }
